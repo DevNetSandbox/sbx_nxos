@@ -1,0 +1,4 @@
+---
+- include: l3_fabric_ip_addresses.yml
+- include: local_loopback_networks.yml
+- include: l3_fabric_ospf_routing.yml

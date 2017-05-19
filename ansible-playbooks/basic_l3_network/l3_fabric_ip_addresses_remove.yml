@@ -1,5 +1,5 @@
 ---
-- name: Configure IP Connectivity for L3 Fabric
+- name: Remove IP Connectivity for L3 Fabric
   hosts: switches
   connection: local
   tasks: 

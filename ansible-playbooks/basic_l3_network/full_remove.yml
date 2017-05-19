@@ -1,0 +1,5 @@
+--- 
+- include: l3_fabric_bgp_routing_remove.yml
+- include: l3_fabric_ospf_routing_remove.yml
+- include: local_loopback_networks_remove.yml
+- include: l3_fabric_ip_addresses_remove.yml

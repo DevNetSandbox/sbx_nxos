@@ -1,5 +1,5 @@
 ---
-- name: Enable OSPF Feature
+- name: Disable OSPF Feature
   hosts: switches
   connection: local
   tasks: 

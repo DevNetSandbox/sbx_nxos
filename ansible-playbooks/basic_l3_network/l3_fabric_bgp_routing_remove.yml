@@ -1,5 +1,5 @@
 ---
-- name: Enable BGP Feature
+- name: Disable BGP Feature
   hosts: switches
   connection: local
   tasks: 
