@@ -1,0 +1,21 @@
+---
+- name: Configure IP Connectivity for L3 Fabric
+  hosts: switches
+  connection: local
+  tasks: 
+    - name: Reset Interface Configuration
+      with_items: "{{ l3_fabric.interfaces }}"
+      nxos_interface: 
+        host: "{{ inventory_hostname }}"
+        transport: nxapi 
+        interface: "{{ item.name }}"
+        mode: layer3
+        description: "{{ item.name }}"
+        admin_state: up
+    - name: Remove IPv4 Address on Interface
+      with_items: "{{ l3_fabric.interfaces }}"
+      nxos_ip_interface:
+        host: "{{ inventory_hostname }}"
+        state: absent
+        transport: nxapi
+        interface: "{{ item.name }}"

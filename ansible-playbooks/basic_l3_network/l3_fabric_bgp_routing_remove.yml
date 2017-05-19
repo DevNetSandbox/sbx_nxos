@@ -1,0 +1,11 @@
+---
+- name: Enable BGP Feature
+  hosts: switches
+  connection: local
+  tasks: 
+    - name: Disable BGP Feature
+      nxos_feature: 
+        host: "{{ inventory_hostname }}"
+        transport: nxapi
+        feature: bgp
+        state: disabled
