@@ -12,4 +12,4 @@ In an effort to make contributing easier, and make sure pull requests are accept
     * Add details on your new example to the end of the file 
     * Add an entry within the "Quick Links" section at the top with your example title and a link to your new content 
 1. If your example has dependencies, include setup details and information needed to use your example.  
-    * For example, if you are contributing a Python script, include a `requrements.txt` file with your script indicating what modules are required.  
+    * For example, if you are contributing a Python script, include a `requirements.txt` file with your script indicating what modules are required.  
