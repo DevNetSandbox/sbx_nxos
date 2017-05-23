@@ -12,6 +12,7 @@ Here you will find some sample playbooks to deploy common configurations and top
 * [Sample Topologies and Configs](#sample-topologies-and-configs)
     * [Basic Layer 3 Fabric](#basic-layer-3-fabric)
     * [Basic Layer 2 Fabric](#basic-layer-2-fabric) - *Coming Soon!*
+    * [Switch Admin Tasks](#switch-admin-tasks)
 
 # Code and Ansible Setup 
 
@@ -202,3 +203,32 @@ ansible-playbook basic_l3_network/full_remove.yml
 # Basic Layer 2 Fabric
 
 *Coming Soon!*
+
+# Switch Admin Tasks
+
+Here are some basic switch administration playbooks included.  Some of these are actually used as part of the Sandbox preparation tasks.  
+
+* [set\_boot\_image.yml](#set\_boot\_image.yml )
+
+### set\_boot\_image.yml 
+
+The playbook [switch\_admin/set\_boot\_image.yml](switch_admin/set_boot_image.yml) sets the `boot nxos` configuration on the switches using the `nxos_config` module.  
+
+This playbook is leveraged as part of the Sandbox setup process to ensure the switches reload successfully should you restart them during testing.  
+
+To execute the playbook: 
+
+```bash
+# from the sbx-nxos directory
+# activate the venv 
+source venv/bin/activate 
+
+# source the switch credentials
+source .ansible_env
+
+# enter the playbook directory
+cd ansible-playbooks
+
+# run the full remove playbook
+ansible-playbook switch_admin/set_boot_image.yml
+```

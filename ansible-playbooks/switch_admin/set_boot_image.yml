@@ -1,0 +1,28 @@
+---
+- name: Set boot image on switch
+  hosts: switches
+  gather_facts: no
+  connection: local
+  tasks: 
+    - name: Wait for device to boot
+      wait_for:
+        host: "{{ inventory_hostname }}"
+        port: 22
+        state: started
+        delay: 30
+        timeout: 900
+    # The nxos_install_os module errors if there is nothing
+    # set to start.  So can't use it.  
+    # - name: Set boot image
+    #   nxos_install_os:
+    #     host: "{{ inventory_hostname }}"
+    #     transport: nxapi
+    #     system_image_file: nxos.7.0.3.I5.2.bin
+    - name: Configure boot image
+      nxos_config: 
+        host: "{{ inventory_hostname }}"
+        transport: cli 
+        lines: boot nxos bootflash:nxos.7.0.3.I5.2.bin
+        match: exact
+        timeout: 120
+                

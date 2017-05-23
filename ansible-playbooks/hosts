@@ -1,11 +1,11 @@
 [switches]
-172.16.1.101
-172.16.1.102
-172.16.1.103
-172.16.1.104
+172.16.1.101 ansible_python_interpreter="/usr/bin/env python"
+172.16.1.102 ansible_python_interpreter="/usr/bin/env python"
+172.16.1.103 ansible_python_interpreter="/usr/bin/env python"
+172.16.1.104 ansible_python_interpreter="/usr/bin/env python"
 
 [spine]
-172.16.1.101
+172.16.1.101 
 172.16.1.102
 
 [leaf]
