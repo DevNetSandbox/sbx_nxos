@@ -10,6 +10,50 @@ And should you develop some interesting code targeting the Sandbox and want to s
 
 # Repo Resources 
 
+## Sandbox Management
+
+This DevNet Sandbox leverages VIRL for building and managing the environment, however there is no need for you as the user to be familiar with VIRL to leverage the Sandbox resources.  
+
+Should you run into issues with one or more of the nodes in the sandbox, or simply wish to restart the full environment, the following scripts are available to use within the [sbx-mgmt](sbx-mgmt) folder. 
+
+* [status-sbx.py](sbx-mgmt/status-sbx.py): Check the status of the devices in the simulation.  A status of **ACTIVE** indicates a node that is booted.  
+* [restart-sbx.py](sbx-mgmt/restart-sbx.py): Stop all the nodes in the simulation, and restart them.  The restart of the nodes takes about 2 minutes, but the Nexus 9000v's can take up to 15 minutes to fully boot.  
+
+### Using the Scripts 
+
+Before you can run the scripts, you need to have the `requests` Python module installed.  You can install it with `pip install requests`, or for convenience a [`requirements.txt`](sbx-mgmt/requirements.txt) file is included in the `sbx-mgmt` directory.  
+
+```bash
+# from the sbx_nxos directory and virtual env
+
+pip install -r sbx-mgmt/requirements.txt 
+```
+
+Now you can execute the scripts like this: 
+
+```bash
+# from the sbx_nxos directory and virtual env
+cd sbx-mgmt
+
+# Check Status
+python status-sbx.py
+
+# Sample output
+VIRL Simulation Name: nxos_9k-34mbMF
+
+~mgmt-lxc: Status ACTIVE
+nx-osv9000-4: Status ACTIVE
+nx-osv9000-1: Status ACTIVE
+nx-osv9000-3: Status ACTIVE
+nx-osv9000-2: Status ACTIVE
+server-2: Status ACTIVE
+server-1: Status ACTIVE
+
+# Restart
+python restart-sbx.py
+```
+
+
 ## Ansible Playbooks
 
 Ansible is a great technology for Configuration Management of the network, and we've provided some sample playbooks to take a look at.  Take a look at what's available here:  [ansible-playbooks/README.md](ansible-playbooks/README.md).  

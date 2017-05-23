@@ -9,20 +9,23 @@
         host: "{{ inventory_hostname }}"
         port: 22
         state: started
-        delay: 30
-        timeout: 900
+        delay: 10
+        timeout: 1200
+    - name: Pause for 30 seconds post boot
+      pause: 
+        seconds: 30
     # The nxos_install_os module errors if there is nothing
     # set to start.  So can't use it.  
     # - name: Set boot image
     #   nxos_install_os:
     #     host: "{{ inventory_hostname }}"
     #     transport: nxapi
-    #     system_image_file: nxos.7.0.3.I5.2.bin
+    #     system_image_file: nxos.7.0.3.I6.1.bin
     - name: Configure boot image
       nxos_config: 
         host: "{{ inventory_hostname }}"
         transport: cli 
-        lines: boot nxos bootflash:nxos.7.0.3.I5.2.bin
+        lines: boot nxos bootflash:nxos.7.0.3.I6.1.bin
+        save: yes
         match: exact
         timeout: 120
-                
