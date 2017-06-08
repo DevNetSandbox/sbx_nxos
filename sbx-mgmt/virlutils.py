@@ -6,7 +6,7 @@ Basic wrappers for the VIRL API
 
 import requests 
 
-simengine_host = "http://10.10.10.160:19399"
+simengine_host = "http://10.10.20.160:19399"
 virl_user = "guest"
 virl_password = "guest" 
 
