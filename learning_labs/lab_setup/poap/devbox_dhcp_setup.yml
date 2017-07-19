@@ -1,0 +1,31 @@
+---
+- hosts: devbox
+  become: true
+  vars:
+    dhcp_global_default_lease_time: 28800 # 8hrs
+    dhcp_global_max_lease_time: 43200 # 12 hrs
+    dhcp_global_domain_name: sbx.devnet.intra
+    dhcp_global_domain_name_servers:
+      - 208.67.222.222
+      - 208.67.220.220
+    dhcp_global_bootp: allow
+    dhcp_global_booting: allow
+    #dhcp_global_next_server: 192.168.222.3
+    #dhcp_global_filename: boot.img
+
+    dhcp_subnets:
+      - ip: 172.16.30.0
+        default_lease_time: 3600
+        max_lease_time: 7200
+        netmask: 255.255.255.0
+        domain_name_servers: 208.67.222.222
+        routers: 172.16.30.254
+#         hosts:
+#           - name: nx-osv9000-1
+#             mac: '00:11:22:33:44:55'
+#             ip: 192.168.222.150
+
+    dhcp6_enable: false
+
+  roles:
+    - dhcp_server
