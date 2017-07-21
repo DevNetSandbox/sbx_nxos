@@ -27,31 +27,31 @@
         routers: 172.16.30.254
         range_begin: 172.16.30.101
         range_end: 172.16.30.150
-         hosts:
-           - name: nx-osv9000-1
-             mac: 'aa:aa:aa:aa:aa:aa'
-             ip: 172.16.30.101
-           - name: nx-osv9000-2
-             mac: 'aa:aa:aa:aa:aa:ab'
-             ip: 172.16.30.102
-           - name: nx-osv9000-3
-             mac: 'aa:aa:aa:aa:aa:ac'
-             ip: 172.16.30.103
-           - name: nx-osv9000-4
-             mac: 'aa:aa:aa:aa:aa:ad'
-             ip: 172.16.30.104
-           - name: nx-osv9000-1-poap
-             mac: 'aa:aa:aa:aa:aa:b1'
-             ip: 172.16.30.141
-           - name: nx-osv9000-2-poap
-             mac: 'aa:aa:aa:aa:aa:b2'
-             ip: 172.16.30.142
-           - name: nx-osv9000-3-poap
-             mac: 'aa:aa:aa:aa:aa:b3'
-             ip: 172.16.30.143
-           - name: nx-osv9000-4-poap
-             mac: 'aa:aa:aa:aa:aa:b4'
-             ip: 172.16.30.144
+        hosts:
+          - name: nx-osv9000-1
+            mac: 'aa:aa:aa:aa:aa:aa'
+            ip: 172.16.30.101
+          - name: nx-osv9000-2
+            mac: 'aa:aa:aa:aa:aa:ab'
+            ip: 172.16.30.102
+          - name: nx-osv9000-3
+            mac: 'aa:aa:aa:aa:aa:ac'
+            ip: 172.16.30.103
+          - name: nx-osv9000-4
+            mac: 'aa:aa:aa:aa:aa:ad'
+            ip: 172.16.30.104
+          - name: nx-osv9000-1-poap
+            mac: 'aa:aa:aa:aa:aa:b1'
+            ip: 172.16.30.141
+          - name: nx-osv9000-2-poap
+            mac: 'aa:aa:aa:aa:aa:b2'
+            ip: 172.16.30.142
+          - name: nx-osv9000-3-poap
+            mac: 'aa:aa:aa:aa:aa:b3'
+            ip: 172.16.30.143
+          - name: nx-osv9000-4-poap
+            mac: 'aa:aa:aa:aa:aa:b4'
+            ip: 172.16.30.144
 
     dhcp6_enable: false
 
