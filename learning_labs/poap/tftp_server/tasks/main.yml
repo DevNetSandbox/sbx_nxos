@@ -14,3 +14,9 @@
     src: files/tftp
     dest: /etc/xinetd.d/tftp
   notify: start tftp
+
+- name: ENSURE THE SERVICE IS STARTED
+  systemd:
+    name: tftp
+    state: started
+    enabled: yes
