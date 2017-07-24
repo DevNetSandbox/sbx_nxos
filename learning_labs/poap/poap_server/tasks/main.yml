@@ -9,17 +9,30 @@
     - mod_wsgi
     - python-devel
 
+# Copy the poap app to /var/www/
+- name: ENSURE THAT THE POAP SERVER IS INSTALLED
+  copy:
+    src: files/poap_app
+    dest: /var/www/
+    
 - name: ENSURE THAT APACHE SERVER IS CONFIGURED CORRECTLY
   copy:
     src: files/httpd.conf
     dest: /etc/httpd/conf/httpd.conf
   notify: start httpd
 
+# Also explicitly start httpd as a task. Notify is only triggered when the conf file changes
+
+- name: ENSURE THAT THE HTTP SERVER IS STARTED
+  systemd:
+    name: httpd
+    enabled: yes
+    state: started
 
 - name: ENSURE THAT THE POAP SERVER DETAILS ARE UPDATED IN THE ZTP SCRIPT
   template:
     src: ztp_script.j2
-    dest: /root/sbx_nxos/learning_labs/poap/poap_app/files/ztp_script.py
+    dest: /var/www/poap_app/files/ztp_script.py
     
 - name: ENSURE THAT THE MD5SUM OF THE ZTP SCRIPT IS UPDATED
-  shell: /root/sbx_nxos/learning_labs/poap/poap_app/files/md5sum_ztp.sh
+  shell: /var/www/poap_app/files/md5sum_ztp.sh
