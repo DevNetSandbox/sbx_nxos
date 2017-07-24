@@ -26,7 +26,7 @@
         range_begin: 172.16.30.101
         range_end: 172.16.30.150
         next_server: 10.10.20.20
-        filename: test.cfg
+        filename: ztp_script.py
 
     dhcp_hosts:
       - name: nx-osv9000-1
@@ -58,3 +58,5 @@
 
   roles:
     - dhcp_server
+    - poap_server
+    - tftp_server

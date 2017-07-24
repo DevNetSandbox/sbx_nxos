@@ -1,0 +1,25 @@
+---
+
+# Install the WSGI components
+- name: ENSURE THAT WSGI IS AVAILABLE
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - mod_wsgi
+    - python-devel
+
+- name: ENSURE THAT APACHE SERVER IS CONFIGURED CORRECTLY
+  copy:
+    src: files/httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
+  notify: start httpd
+
+
+- name: ENSURE THAT THE POAP SERVER DETAILS ARE UPDATED IN THE ZTP SCRIPT
+  template:
+    src: ztp_script.j2
+    dest: /root/sbx_nxos/learning_labs/poap/poap_app/files/ztp_script.py
+    
+- name: ENSURE THAT THE MD5SUM OF THE ZTP SCRIPT IS UPDATED
+  shell: /root/sbx_nxos/learning_labs/poap/poap_app/files/md5sum_ztp.sh
