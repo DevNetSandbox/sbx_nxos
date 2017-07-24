@@ -8,12 +8,17 @@
   with_items:
     - mod_wsgi
     - python-devel
+    - python-flask
+    - python-flask-restful
+    - python-yaml
+
 
 # Copy the poap app to /var/www/
 - name: ENSURE THAT THE POAP SERVER IS INSTALLED
   copy:
     src: files/poap_app
     dest: /var/www/
+    mode: 0755
     
 - name: ENSURE THAT APACHE SERVER IS CONFIGURED CORRECTLY
   copy:
