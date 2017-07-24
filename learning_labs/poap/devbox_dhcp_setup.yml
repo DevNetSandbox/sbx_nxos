@@ -58,5 +58,7 @@
 
   roles:
     - dhcp_server
-    - poap_server
-    - tftp_server
+    - role: poap_server
+      tags: poap
+    - role: tftp_server
+      tags: tftp

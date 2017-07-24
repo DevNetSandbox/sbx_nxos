@@ -1,0 +1,16 @@
+---
+
+- name: ENSURE THAT THE TFTP SERVER IS INSTALLED
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - xinetd
+    - tftp-server
+    - tftp
+
+- name: ENSURE THAT THE TFTP CONFIGS ARE INSTALLED
+  copy:
+    src: files/tftp
+    dest: /etc/xinetd.d/tftp
+  notify: start tftp
