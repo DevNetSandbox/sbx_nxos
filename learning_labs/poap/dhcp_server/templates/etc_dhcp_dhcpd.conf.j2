@@ -140,10 +140,10 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
   filename "{{ subnet.filename }}";
 {% endif %}
 {% if subnet.tftp_server is defined %}
-  option tftp-server-address {{ subnet.tftp_server }}
+  option tftp-server-address {{ subnet.tftp_server }};
 {% endif %}
 {% if subnet.bootfile_name is defined %}
-  option bootfile-name "{{ subnet.bootfile_name }}"
+  option bootfile-name "{{ subnet.bootfile_name }}";
 {% endif %}
 {% if subnet.bootp is defined %}
 {{ subnet.bootp }} bootp;

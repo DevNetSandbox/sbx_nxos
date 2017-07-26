@@ -11,7 +11,7 @@
     dhcp_global_bootp: allow
     dhcp_global_booting: allow
     dhcp_global_other_options:
-      - tftp-server-address code 150 = ip-address;
+      - tftp-server-address code 150 = ip-address
 
     dhcp_subnets:
       - ip: 10.10.20.0
@@ -41,6 +41,10 @@
       
     dhcp6_enable: false
 
+  tasks:
+    - include: poap_reqs.yml
+      tags: poap
+      
   roles:
     - role: dhcp_server
       tags: dhcp
