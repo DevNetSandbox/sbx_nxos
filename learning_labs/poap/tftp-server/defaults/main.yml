@@ -17,15 +17,15 @@ tftp_disable: "no"
 # ftp, ...). See man tftpd_selinux(8) for details
 tftp_setype: tftpdir_rw_t
 
-tftp_anon_write: no
-tftp_home_dir: no
+tftp_anon_write: yes
+tftp_home_dir: yes
 
 tftp_socket_type: "dgram"
 tftp_protocol: "udp"
 tftp_wait: "yes"
 tftp_user: "root"
 tftp_group: "root"
-tftp_mode: "0755"
+tftp_mode: "0777"
 tftp_server: "/usr/sbin/in.tftpd"
 tftp_per_source: "11"
 tftp_cps: "100 2"
