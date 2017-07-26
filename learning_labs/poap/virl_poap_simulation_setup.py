@@ -33,7 +33,7 @@ if __name__ == "__main__":
     
     # Wait for nodes to be fully started (state = ACTIVE)
     while not test_node_state(poap_sim_name, "ACTIVE"):
-        print("  Nodes note started yet")
+        print("  Nodes not started yet")
         sleep(10)
     print("")
         

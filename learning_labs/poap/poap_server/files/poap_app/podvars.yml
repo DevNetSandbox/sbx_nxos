@@ -1,0 +1,47 @@
+---
+
+pod:
+  net: 172.16.30.0
+  mask: 255.255.255.0
+  tftp_server: 10.10.20.20
+  http_server: 10.10.20.20
+  protocol: http
+
+switches:
+  - s_no: 9Q47C5Z7B45
+    details:
+      hostname: nx-osv9000-1
+      mac: aa:aa:aa:aa:aa:b1
+      mgmt0_ip: 172.16.30.141/24
+      lo0_ip: 192.168.0.241/24
+      system_image: nxos.7.0.3.I6.1.bin
+      kickstart_image: ""
+
+  - s_no: 
+    details:
+      hostname: nx-osv9000-2
+      mac: aa:aa:aa:aa:aa:b2
+      mgmt0_ip: 172.16.30.142/24
+      lo0_ip: 192.168.0.242/24
+      system_image: nxos.7.0.3.I6.1.bin
+      kickstart_image: ""
+
+  - s_no: 
+    details:
+      hostname: nx-osv9000-3
+      mac: 0800.27f4.94fb
+      mgmt0_ip: 172.16.30.143/24
+      lo0_ip: 192.168.0.243/24
+      system_image: nxos.7.0.3.I5.1.bin
+      kickstart_image: ""
+
+  - s_no: xxx
+    details:
+      hostname: nx-osv9000-4
+      mac: aa:aa:aa:aa:aa:b4
+      mgmt0_ip: 172.16.30.144/24
+      lo0_ip: 192.168.0.244/24
+      system_image: nxos.7.0.3.I6.1.bin
+      kickstart_image: ""
+
+  

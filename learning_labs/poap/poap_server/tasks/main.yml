@@ -18,7 +18,7 @@
   copy:
     src: files/poap_app
     dest: /var/www/
-    mode: 0755
+    mode: 0777
     
 - name: ENSURE THAT APACHE SERVER IS CONFIGURED CORRECTLY
   copy:
@@ -26,13 +26,6 @@
     dest: /etc/httpd/conf/httpd.conf
   notify: start httpd
 
-# Also explicitly start httpd as a task. Notify is only triggered when the conf file changes
-
-- name: ENSURE THAT THE HTTP SERVER IS STARTED
-  systemd:
-    name: httpd
-    enabled: yes
-    state: started
 
 - name: ENSURE THAT THE POAP SERVER DETAILS ARE UPDATED IN THE ZTP SCRIPT
   template:
@@ -41,3 +34,11 @@
     
 - name: ENSURE THAT THE MD5SUM OF THE ZTP SCRIPT IS UPDATED
   shell: /var/www/poap_app/files/md5sum_ztp.sh
+
+# Also explicitly start httpd as a task. Notify is only triggered when the conf file changes
+
+- name: ENSURE THAT THE HTTP SERVER IS STARTED
+  systemd:
+    name: httpd
+    enabled: yes
+    state: started
