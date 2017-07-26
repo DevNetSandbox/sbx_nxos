@@ -4,7 +4,7 @@ pod:
   net: 172.16.30.0
   mask: 255.255.255.0
   tftp_server: 10.10.20.20
-  http_server: 10.10.20.20
+  http_server: 10.10.20.20:5000
   protocol: http
 
 switches:
