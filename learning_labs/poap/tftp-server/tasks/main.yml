@@ -1,0 +1,65 @@
+# roles/tftp/tasks/main.yml
+---
+
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags: tftp
+
+- name: Install packages
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items: "{{ tftp_packages }}"
+  tags: tftp
+
+- name: Ensure tftp root directory exists
+  file:
+    path: "{{ tftp_root_directory }}"
+    state: directory
+    owner: "{{ tftp_user }}"
+    group: "{{ tftp_group }}"
+    mode: "{{ tftp_mode }}"
+    setype: "{{ tftp_setype }}"
+  tags: tftp
+
+- name: Ensure SELinux boolean ‘tftp_anon_write’ has the desired value
+  seboolean:
+    name: tftp_anon_write
+    state: "{{ tftp_anon_write }}"
+    persistent: yes
+  tags: tftp
+
+- name: Ensure SELinux boolean ‘tftp_home_dir’ has the desired value
+  seboolean:
+    name: tftp_home_dir
+    state: "{{ tftp_home_dir }}"
+    persistent: yes
+  tags: tftp
+
+- name: Ensure service is started
+  service:
+    name: "{{ tftp_service }}"
+    state: started
+    enabled: true
+  tags: tftp
+
+- name: Install configuration file
+  template:
+    dest: "{{ tftp_config }}"
+    src: etc_xinetd.d_tftp.j2
+  notify:
+    - restart tftp
+  tags: tftp
+
+- name: Install foreman map file
+  template:
+    dest: "{{ tftp_foreman_map_file }}"
+    src: etc_tftpd.map.j2
+  notify:
+    - restart tftp
+  when: tftp_server_foreman_support
+  tags:
+    - tftp
+    - foreman

@@ -1,8 +1,0 @@
----
-
-- name: start tftp
-  systemd:
-    name: tftp
-    enabled: yes
-    state: started
-    
