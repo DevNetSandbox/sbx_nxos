@@ -224,7 +224,7 @@ def set_bootvar():
     # Boot var is not getting set from config file.
     # Explicitly set it
     poap_log("Setting the boot command....")
-    boot_cmd = "terminal dont-ask; boot nxos bootflash:/nxos.7.0.3.I6.1.bin"
+    boot_cmd = "terminal dont-ask; boot nxos bootflash:/nxos.7.0.3.I6.1.bin; "
     boot_cmd += "copy running startup"
     try:
         cli(boot_cmd)
