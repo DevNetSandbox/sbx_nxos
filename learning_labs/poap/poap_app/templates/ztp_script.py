@@ -220,6 +220,19 @@ def image_install(kickstart="", system="", tftp_server=""):
         poap_log("Failed to set NXOS boot variable to %s" % system)
         abort(str(e))
 
+def set_bootvar():
+    # Boot var is not getting set from config file.
+    # Explicitly set it
+    poap_log("Setting the boot command....")
+    boot_cmd = "terminal dont-ask; boot nxos bootflash:/nxos.7.0.3.I6.1.bin"
+    boot_cmd += "copy running startup"
+    try:
+        cli(boot_cmd)
+    except Exception as e:
+        poap_log("Failed to set the bootvar")
+        abort(str(e))
+    # End bootvar
+    
 def copy_config(**kwargs):
     """Copies over the desired start up configuration"""
     protocol = kwargs['config_protocol']
@@ -302,6 +315,8 @@ def main():
     # Collect the switch details for POAP
     INSTALL_INFO = poap_collect()
     poap_log("Install info collected successfully...")
+    # Set the bootvar
+    set_bootvar()
     # Download and Install the user requested image
     image_install(kickstart=INSTALL_INFO['kickstart_image'],
                   system=INSTALL_INFO['system_image'],
