@@ -3,6 +3,6 @@
 - name: INSTALL POAP SERVER REQUIREMENTS
   pip:
     requirements: poap_reqs.txt
-    virtual_environment: /root/sbx_nxos/venv/python2
+    virtualenv: /root/sbx_nxos/venv/python2
 
     
