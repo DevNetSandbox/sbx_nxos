@@ -16,7 +16,7 @@ def render_conf(cwd, switch):
         loader=FileSystemLoader(os.path.join(cwd, 'templates')),
         trim_blocks=False)
     
-    out_file = os.path.join(cwd, ('templates/' + switch['s_no'] + '.cfg'))
+    out_file = os.path.join(cwd, ('templates/' + switch['id'] + '.cfg'))
     with open(out_file, 'w') as fh:
         config = TEMPLATE_ENVIRONMENT.get_template('conf_nxv.j2').render(switch)
         fh.write(config)
@@ -51,7 +51,7 @@ class SwitchID(Resource):
             if switch.get('id') == s_no: # Operator is using the serial number
                 poap_info.update(render_conf(cwd, switch))
             elif switch.get('id') == request.form['data']: # Operator is using the MAC
-                switch['id'] == s_no # Use the s_no to render the config
+                switch['id'] = s_no # Use the s_no to render the config
                 poap_info.update(render_conf(cwd, switch))
             #End For loop
             
