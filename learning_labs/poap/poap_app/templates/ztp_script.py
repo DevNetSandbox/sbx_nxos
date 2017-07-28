@@ -167,7 +167,6 @@ def poap_collect():
     #     "kickstart_image": ""
     #     "config_protocol" : "http"  <-- Currently HTTP and TFTP are
     #     supported
-    #     "hostname" : "nxosv-9000-1"
     # }
 
     info = opener.open(req).read()
@@ -224,8 +223,8 @@ def set_bootvar():
     # Boot var is not getting set from config file.
     # Explicitly set it
     poap_log("Setting the boot command....")
-    boot_cmd = "terminal dont-ask; boot nxos bootflash:/nxos.7.0.3.I6.1.bin; "
-    boot_cmd += "copy running startup"
+    boot_cmd = "terminal dont-ask ; config terminal ; boot nxos bootflash:nxos.7.0.3.I6.1.bin ; "
+    boot_cmd += "copy running-config startup-config"
     try:
         cli(boot_cmd)
     except Exception as e:
@@ -236,7 +235,6 @@ def set_bootvar():
 def copy_config(**kwargs):
     """Copies over the desired start up configuration"""
     protocol = kwargs['config_protocol']
-    hostname = kwargs['hostname']
     filename = kwargs['config_file']
     vrf = "Management"
     if protocol == "tftp":

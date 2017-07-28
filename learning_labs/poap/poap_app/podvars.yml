@@ -8,40 +8,32 @@ pod:
   protocol: http
 
 switches:
-  - s_no: 
-    details:
-      hostname: nx-osv9000-1
-      mac: aaaa.aaaa.aaaa
-      mgmt0_ip: 172.16.30.101/24
-      lo0_ip: 192.168.0.101/24
-      system_image: nxos.7.0.3.I6.1.bin
-      kickstart_image: ""
+  - hostname: nx-osv9000-1
+    id: aaaa.aaaa.aaaa
+    mgmt0_ip: 172.16.30.101/24
+    lo0_ip: 192.168.0.101/24
+    system_image: nxos.7.0.3.I6.1.bin
+    kickstart_image: ""
 
-  - s_no: 
-    details:
-      hostname: nx-osv9000-2
-      mac: aaaa.aaaa.aaab
-      mgmt0_ip: 172.16.30.102/24
-      lo0_ip: 192.168.0.102/24
-      system_image: nxos.7.0.3.I6.1.bin
-      kickstart_image: ""
+  - hostname: nx-osv9000-2
+    id: aaaa.aaaa.aaab
+    mgmt0_ip: 172.16.30.102/24
+    lo0_ip: 192.168.0.102/24
+    system_image: nxos.7.0.3.I6.1.bin
+    kickstart_image: ""
 
-  - s_no: 
-    details:
-      hostname: nx-osv9000-3
-      mac: aaaa.aaaa.aaac
-      mgmt0_ip: 172.16.30.103/24
-      lo0_ip: 192.168.0.103/24
-      system_image: nxos.7.0.3.I6.1.bin
-      kickstart_image: ""
+  - hostname: nx-osv9000-3
+    id: aaaa.aaaa.aaac
+    mgmt0_ip: 172.16.30.103/24
+    lo0_ip: 192.168.0.103/24
+    system_image: nxos.7.0.3.I6.1.bin
+    kickstart_image: ""
 
-  - s_no:
-    details:
-      hostname: nx-osv9000-4
-      mac: aaaa.aaaa.aaad
-      mgmt0_ip: 172.16.30.104/24
-      lo0_ip: 192.168.0.104/24
-      system_image: nxos.7.0.3.I6.1.bin
-      kickstart_image: ""
+  - hostname: nx-osv9000-4
+    id: aaaa.aaaa.aaad
+    mgmt0_ip: 172.16.30.104/24
+    lo0_ip: 192.168.0.104/24
+    system_image: nxos.7.0.3.I6.1.bin
+    kickstart_image: ""
 
   

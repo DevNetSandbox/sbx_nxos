@@ -1,7 +1,7 @@
 power redundancy-mode combined force
 
-hostname {{ details.hostname }}
-vdc {{ details.hostname }} id 1
+hostname {{ hostname }}
+vdc {{ hostname }} id 1
   limit-resource vlan minimum 16 maximum 4094
   limit-resource vrf minimum 2 maximum 4096
   limit-resource port-channel minimum 0 maximum 511
@@ -64,12 +64,12 @@ interface Ethernet1/4
 interface mgmt0
   description OOB Management
   vrf member management
-  ip address {{ details.mgmt0_ip }}
+  ip address {{ mgmt0_ip }}
 
 interface loopback0
   description Loopback
-  ip address {{ details.lo0_ip }}
+  ip address {{ lo0_ip }}
 
 line console
 line vty
-boot nxos bootflash:/{{ details.system_image }} 
+boot nxos bootflash:/{{ system_image }} 

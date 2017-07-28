@@ -11,11 +11,6 @@ switch_id = {}
 
 def render_conf(cwd, switch):
     # Set up the templates info for rendering device config
-    print("Rendering the template....")
-    switch_info = {}
-    switch_info['system_image'] = switch['details']['system_image']
-    switch_info['kickstart_image'] = switch['details']['kickstart_image']
-    switch_info['hostname'] = switch['details']['hostname']
     TEMPLATE_ENVIRONMENT = Environment(
         autoescape=False,
         loader=FileSystemLoader(os.path.join(cwd, 'templates')),
@@ -25,6 +20,11 @@ def render_conf(cwd, switch):
     with open(out_file, 'w') as fh:
         config = TEMPLATE_ENVIRONMENT.get_template('conf_nxv.j2').render(switch)
         fh.write(config)
+
+    # Return device specific info needed for OS install
+    switch_info = {}
+    switch_info['system_image'] = switch['system_image']
+    switch_info['kickstart_image'] = switch['kickstart_image']
         
     return(switch_info)
 
@@ -35,7 +35,7 @@ class SwitchID(Resource):
         return {s_no: switch_id['s_no']}
 
     def put(self, s_no):
-        """build out the config file, based on the s_no Return the following:
+        """build out the config file, based on the Serial No. Return the following:
          1. Name of the config file (after creating it) 2. Name of the
          system image 3. IP address of the tftp server
         """
@@ -48,17 +48,13 @@ class SwitchID(Resource):
             vars = yaml.load(fh)
 
         for switch in vars['switches']:
-            if not switch.get('s_no'):
-                #TODO - Use try block
-                print(switch['details']['hostname'], switch['details'].get('mac'))
-                if switch['details'].get('mac') == request.form['data']:
-                    print('No S.No in podvars... mac is {}'.format(switch['details']['mac']))
-                    switch['s_no'] = s_no
-                    poap_info.update(render_conf(cwd, switch))
-            elif s_no == switch['s_no']:
+            if switch.get('id') == s_no: # Operator is using the serial number
                 poap_info.update(render_conf(cwd, switch))
-        
+            elif switch.get('id') == request.form['data']: # Operator is using the MAC
+                switch['id'] == s_no # Use the s_no to render the config
+                poap_info.update(render_conf(cwd, switch))
             #End For loop
+            
         poap_info['tftp_server'] = vars['pod']['tftp_server']
         poap_info['config_file'] = s_no + '.cfg'
         poap_info['http_server'] = vars['pod']['http_server']
