@@ -1,0 +1,7 @@
+---
+- name: INSTALL THE TFTP SERVER
+  hosts: devbox
+  become: true
+
+  roles:
+    - tftp_server
