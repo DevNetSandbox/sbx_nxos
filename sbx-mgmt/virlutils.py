@@ -47,4 +47,27 @@ def test_node_state(simulation, target_state):
         if not nodes[node]["state"] == target_state:
             return False
     return True
-    
+
+def get_node_console(simulation, node):
+    node_key = "guest|{}|virl|{}".format(simulation, node)
+    u = simengine_host + "/roster/rest"
+    r = requests.get(u, auth=(virl_user, virl_password))
+    roster = r.json()
+    for node in roster.keys():
+        if node == node_key: 
+            try: 
+                return {"host": roster[node]["SimulationHost"], "console_port": roster[node]["PortConsole"]}
+            except KeyError: 
+                pass
+
+def kill_simulation(simulation): 
+    u = simengine_host + "/simengine/rest/stop/{}".format(simulation)
+    r = requests.get(u, auth=(virl_user, virl_password))
+    return "{} {}".format(r.status_code, r.text)
+
+def launch_simulation(simulation_name, simulation_data): 
+    u = simengine_host + "/simengine/rest/launch?session={}".format(simulation_name)
+    headers = {"Content-Type": "text/xml;charset=UTF-8"}
+    r = requests.post(u, auth=(virl_user, virl_password), headers = headers, data = simulation_data)
+    return "{} {}".format(r.status_code, r.text)
+
