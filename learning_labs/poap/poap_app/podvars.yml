@@ -12,6 +12,7 @@ switches:
     lo0_ip: 192.168.0.101/24
     system_image: nxos.7.0.3.I6.1.bin
     kickstart_image: ""
+    eth_hdw_id: 1
 
   - hostname: nxos-spine2
     id: aaaa.aaaa.aaab
@@ -19,6 +20,7 @@ switches:
     lo0_ip: 192.168.0.102/24
     system_image: nxos.7.0.3.I6.1.bin
     kickstart_image: ""
+    eth_hdw_id: 2
 
   - hostname: nxos-leaf1
     id: aaaa.aaaa.aaac
@@ -26,6 +28,7 @@ switches:
     lo0_ip: 192.168.0.103/24
     system_image: nxos.7.0.3.I6.1.bin
     kickstart_image: ""
+    eth_hdw_id: 3
 
   - hostname: nxos-leaf2
     id: aaaa.aaaa.aaad
@@ -33,5 +36,6 @@ switches:
     lo0_ip: 192.168.0.104/24
     system_image: nxos.7.0.3.I6.1.bin
     kickstart_image: ""
+    eth_hdw_id: 4
 
   
