@@ -10,23 +10,20 @@
       - 208.67.220.220
     dhcp_global_bootp: allow
     dhcp_global_booting: allow
+    dhcp_global_other_options:
+      - tftp-server-address code 150 = ip-address
 
     dhcp_subnets:
       - ip: 10.10.20.0
         netmask: 255.255.255.0
-        routers: 10.10.20.254
-        range_begin: 10.10.20.0
-        range_end: 10.10.20.0
       - ip: 172.16.30.0
         default_lease_time: 3600
         max_lease_time: 7200
         netmask: 255.255.255.0
         domain_name_servers: 208.67.222.222
         routers: 172.16.30.254
-        range_begin: 172.16.30.101
-        range_end: 172.16.30.150
-        next_server: 10.10.20.20
-        filename: test.cfg
+        tftp_server: 10.10.20.20
+        bootfile_name: poap_script.py
 
     dhcp_hosts:
       - name: nx-osv9000-1
@@ -41,19 +38,7 @@
       - name: nx-osv9000-4
         mac: 'aa:aa:aa:aa:aa:ad'
         ip: 172.16.30.104
-      - name: nx-osv9000-1-poap
-        mac: 'aa:aa:aa:aa:aa:b1'
-        ip: 172.16.30.141
-      - name: nx-osv9000-2-poap
-        mac: 'aa:aa:aa:aa:aa:b2'
-        ip: 172.16.30.142
-      - name: nx-osv9000-3-poap
-        mac: 'aa:aa:aa:aa:aa:b3'
-        ip: 172.16.30.143
-      - name: nx-osv9000-4-poap
-        mac: 'aa:aa:aa:aa:aa:b4'
-        ip: 172.16.30.144
-
+      
     dhcp6_enable: false
 
   roles:

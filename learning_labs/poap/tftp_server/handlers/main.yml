@@ -1,0 +1,7 @@
+# roles/tftp/handlers/main.yml
+---
+
+- name: restart tftp
+  service:
+    name: "{{ tftp_service }}"
+    state: restarted

@@ -1,0 +1,13 @@
+---
+- name: INSTALL THE REQUIREMENTS FOR FLASK
+  hosts: devbox
+  become: true
+
+  tasks:
+
+    - name: INSTALL POAP SERVER REQUIREMENTS
+      pip:
+        requirements: /root/sbx_nxos/learning_labs/poap/poap_reqs.txt
+        virtualenv: /root/sbx_nxos/venv/python2
+
+    
