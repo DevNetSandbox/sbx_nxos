@@ -16,12 +16,13 @@ This DevNet Sandbox leverages VIRL for building and managing the environment, ho
 
 Should you run into issues with one or more of the nodes in the sandbox, or simply wish to restart the full environment, the following scripts are available to use within the [sbx-mgmt](sbx-mgmt) folder. 
 
+* [node\_console\_info.py](sbx-mgmt/node_console_info.py): Print the console port connection information for each node in the simulation.  With this information you can telnet and connect directly to the console of each node.  
 * [status-sbx.py](sbx-mgmt/status-sbx.py): Check the status of the devices in the simulation.  A status of **ACTIVE** indicates a node that is booted.  
-* [restart-sbx.py](sbx-mgmt/restart-sbx.py): Stop all the nodes in the simulation, and restart them.  The restart of the nodes takes about 2 minutes, but the Nexus 9000v's can take up to 15 minutes to fully boot.  
+* [restart-sbx.py](sbx-mgmt/restart-sbx.py): Restart an individual the nodes, or all nodes, in the simulation.  The restart of the nodes takes about 2 minutes, but the Nexus 9000v's can take up to 15 minutes to fully boot.  The script will provide console connection details for monitoring boot.
 
 ### Using the Scripts 
 
-Before you can run the scripts, you need to have the `requests` Python module installed.  You can install it with `pip install requests`, or for convenience a [`requirements.txt`](sbx-mgmt/requirements.txt) file is included in the `sbx-mgmt` directory.  
+Before you can run the scripts, you need to install the Python module dependencies.  For convenience a [`requirements.txt`](sbx-mgmt/requirements.txt) file is included in the `sbx-mgmt` directory.  
 
 ```bash
 # from the sbx_nxos directory and virtual env
@@ -31,11 +32,28 @@ pip install -r sbx-mgmt/requirements.txt
 
 Now you can execute the scripts like this: 
 
+#### Get Console Info
 ```bash
 # from the sbx_nxos directory and virtual env
 cd sbx-mgmt
 
-# Check Status
+python node_console_info.py
+
+VIRL Simulation Name: API-POAP
+
+Retrieving Console Connection Details:
+    Console to csr1000v-1 -> `telnet 10.10.20.160 17012`
+    Console to nx-osv9000-4 -> `telnet 10.10.20.160 17020`
+    Console to nx-osv9000-1 -> `telnet 10.10.20.160 17014`
+    Console to nx-osv9000-3 -> `telnet 10.10.20.160 17018`
+    Console to nx-osv9000-2 -> `telnet 10.10.20.160 17016`
+```
+
+#### Get Status
+```bash
+# from the sbx_nxos directory and virtual env
+cd sbx-mgmt
+
 python status-sbx.py
 
 # Sample output
@@ -48,11 +66,31 @@ nx-osv9000-3: Status ACTIVE
 nx-osv9000-2: Status ACTIVE
 server-2: Status ACTIVE
 server-1: Status ACTIVE
-
-# Restart
-python restart-sbx.py
 ```
 
+#### Restart Nodes
+```bash 
+# from the sbx_nxos directory and virtual env
+cd sbx-mgmt
+
+python restart-sbx.py
+
+VIRL Simulation Name: API-POAP
+
+Which node would you like to restart?
+  0 - csr1000v-1: Status ACTIVE
+  1 - ~mgmt-lxc: Status ACTIVE
+  2 - nx-osv9000-4: Status ACTIVE
+  3 - nx-osv9000-1: Status ACTIVE
+  4 - nx-osv9000-3: Status ACTIVE
+  5 - nx-osv9000-2: Status ACTIVE
+  a - Restart All Nodes
+Enter 0 - 5 to choose a node, or a for all
+```
+
+## Learning Labs
+
+This sandbox is leveraged in different NX-OS Learning Labs.  Within the [learning_labs](learning_labs/) directory are different code samples used in these learning labs.  Feel free to explore these samples on their own, or use the sandbox along with the Learning Labs.  
 
 ## Ansible Playbooks
 
