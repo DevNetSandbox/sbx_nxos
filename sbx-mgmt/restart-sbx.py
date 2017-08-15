@@ -26,7 +26,7 @@ if __name__ == "__main__":
         node_key.append(node)
         print("  {} - {}: Status {}".format(i, node, nodes[node]["state"]))
     print("  a - Restart All Nodes ")
-    print("Enter 0 - {} to choose a node, or a for all").format(len(node_key)-1)
+    print("Enter 0 - {} to choose a node, or a for all".format(len(node_key)-1))
     # Ask user which to start
     choice = input()
     
