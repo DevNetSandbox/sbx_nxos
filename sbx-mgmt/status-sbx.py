@@ -13,7 +13,7 @@ if __name__ == "__main__":
     
     # Get simulation list
     nx_os_simulation = get_simulations()
-    nx_os_simulation_name = nx_os_simulation.keys()[0]
+    nx_os_simulation_name = list(nx_os_simulation.keys())[0]
     
     print("VIRL Simulation Name: {}\n".format(nx_os_simulation_name))
     
