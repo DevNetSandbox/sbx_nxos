@@ -1,0 +1,8 @@
+# Setup environment for ansible playbooks
+# Credentials for DevNet DCI dCloud Pod 
+
+# usage: source .ansible_env
+
+# Authentication for ansible NXOS network modules
+export ANSIBLE_NET_USERNAME=cisco
+export ANSIBLE_NET_PASSWORD=cisco

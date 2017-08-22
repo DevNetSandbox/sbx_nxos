@@ -1,0 +1,8 @@
+---
+# tasks file for nxos_common
+- name: "Configure NXOS NTP"
+  nxos_ntp:
+    server: "{{ntp_server}}"
+    host: "{{ inventory_hostname }}"
+    transport: nxapi
+
