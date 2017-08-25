@@ -1,0 +1,58 @@
+---
+
+- name: SET UP YANG DEVBOX ENVIRONMENT
+  hosts: devbox
+  become: yes
+  tags: devbox
+
+  vars:
+    urls:
+      - https://devhub.cisco.com/artifactory/open-nxos-agents/7.0-3-I6-1/x86_64/mtx-device-7_0_3_I6_1.1.0.0-r1705191346.x86_64.rpm
+      - https://devhub.cisco.com/artifactory/open-nxos-agents/7.0-3-I6-1/x86_64/mtx-infra-1.0.0-r1705191346.x86_64.rpm
+      - https://devhub.cisco.com/artifactory/open-nxos-agents/7.0-3-I6-1/x86_64/mtx-netconf-agent-1.0.1-r1705191346.x86_64.rpm
+      - https://devhub.cisco.com/artifactory/open-nxos-agents/7.0-3-I6-1/x86_64/mtx-openconfig-bgp-7_0_3_I6_1.1.0.0-r1705170158.x86_64.rpm
+      - https://devhub.cisco.com/artifactory/open-nxos-agents/7.0-3-I6-1/x86_64/mtx-openconfig-if-ip-7_0_3_I6_1.1.0.0-r1705170202.x86_64.rpm
+      - https://devhub.cisco.com/artifactory/open-nxos-agents/7.0-3-I6-1/x86_64/mtx-openconfig-interfaces-7_0_3_I6_1.1.0.0-r1705190423.x86_64.rpm
+
+  tasks:
+
+    - name: INSTALL PYANG AND NCCLIENT
+      pip:
+        requirements: /root/sbx_nxos/yang/yang-prereqs/yang-requirements.txt
+        virtualenv: /root/sbx_nxos/venv/python2
+        
+    - name: CREATE THE NXOS RPMS DIRECTORY
+      file:
+        path: /root/sbx_nxos/yang/nxos_rpms
+        state: directory
+        
+    - name: DOWNLOAD THE CISCO ARTIFACTORY RPMs
+      get_url:
+        url: "{{ item }}"
+        dest: /root/sbx_nxos/yang/nxos_rpms/
+      with_items: "{{ urls }}"
+
+        
+    - name: CLONE THE YANG MODELS
+      git:
+        repo: https://github.com/YangModels/yang.git
+        clone: yes
+        dest: /root/sbx_nxos/yang/yang
+
+    - name: ENSURE THAT THE NTC LIBRARY DIR IS ABSENT
+      file:
+        path: /root/sbx_nxos/yang/yang-prereqs/library/ntc-ansible
+        state: absent
+    
+    - name: CLONE THE NTC MODULE
+      git:
+        repo: https://github.com/networktocode/ntc-ansible
+        clone: yes
+        recursive: yes
+        dest: /root/sbx_nxos/yang/yang-prereqs/library/ntc-ansible
+
+    - name: UPDATE NTC CONFIG FILE
+      copy:
+        src: /root/sbx_nxos/yang/yang-prereqs/ntc_config_command.py
+        dest: /root/sbx_nxos/yang/yang-prereqs/library/ntc-ansible/library/ntc_config_command.py
+        
