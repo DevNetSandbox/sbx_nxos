@@ -1,0 +1,5 @@
+---
+# defaults file for nxos_leaf
+vlans:
+  - vlan_id: 1
+    name: DEFAULT

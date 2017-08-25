@@ -1,0 +1,20 @@
+---
+  ###########################################################
+  #         Playbook to configure dCloud switches           #
+  ###########################################################
+  - name: Configuring dCloud switches
+    hosts: dcloud-switches
+    connection: local
+
+    tasks:
+      - name: "Create device configurations from templates."
+        template:
+          src: "{{template}}"
+          dest: "./{{inventory_hostname}}.conf"
+
+      - debug: msg="./{{config}}"
+      - name: "Configuring NXOS stuff."
+        nxos_config:
+          host: "{{inventory_hostname}}"
+          src: "./{{config}}"
+          transport: nxapi

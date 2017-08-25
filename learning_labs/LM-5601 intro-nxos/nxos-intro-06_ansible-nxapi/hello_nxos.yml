@@ -1,0 +1,17 @@
+---
+  ###########################################################
+  #           Playbook to query dCloud switches             #
+  ###########################################################
+  - name: Retrieve facts from dCloud switches
+    hosts: dcloud-switches
+    connection: local
+
+    tasks:
+      - name: "Retrieving NXOS facts."
+        nxos_facts:
+          host: "{{inventory_hostname}}"
+          transport: nxapi
+        register: nxos_info
+
+      - name: "Hi! Here are my facts."
+        debug: msg="{{nxos_info}}"

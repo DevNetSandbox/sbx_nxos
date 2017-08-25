@@ -1,0 +1,9 @@
+[dcloud_switches:children]
+nxos_leaf
+nxos_spine
+
+[nxos_leaf]
+172.16.30.103
+
+[nxos_spine]
+172.16.30.101

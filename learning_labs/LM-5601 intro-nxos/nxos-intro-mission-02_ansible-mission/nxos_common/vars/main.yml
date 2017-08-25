@@ -1,0 +1,3 @@
+---
+# vars file for nxos_common
+ntp_server: 45.76.244.202
