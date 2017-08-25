@@ -17,15 +17,15 @@
 
     - name: CREATE THE NXOS RPMS DIRECTORY
       file:
-        path: /root/sbx_nxos/yang/nxos_rpms
+        path: /root/sbx_nxos/learning_labs/yang/nxos_rpms
         state: directory
       with_items:
-        - /root/sbx_nxos/yang/ansible-playbooks/library
+        - /root/sbx_nxos/learning_labs/yang/ansible-playbooks/library
         
     - name: DOWNLOAD THE CISCO ARTIFACTORY RPMs
       get_url:
         url: "{{ item }}"
-        dest: /root/sbx_nxos/yang/nxos_rpms/
+        dest: /root/sbx_nxos/learning_labs/yang/nxos_rpms/
       with_items: "{{ urls }}"
 
     

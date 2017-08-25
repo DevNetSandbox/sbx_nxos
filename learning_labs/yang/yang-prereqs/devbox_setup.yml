@@ -18,18 +18,18 @@
 
     - name: INSTALL PYANG AND NCCLIENT
       pip:
-        requirements: /root/sbx_nxos/yang/yang-prereqs/yang-requirements.txt
+        requirements: /root/sbx_nxos/learning_labs/yang/yang-prereqs/yang-requirements.txt
         virtualenv: /root/sbx_nxos/venv/python2
         
     - name: CREATE THE NXOS RPMS DIRECTORY
       file:
-        path: /root/sbx_nxos/yang/nxos_rpms
+        path: /root/sbx_nxos/learning_labs/yang/nxos_rpms
         state: directory
         
     - name: DOWNLOAD THE CISCO ARTIFACTORY RPMs
       get_url:
         url: "{{ item }}"
-        dest: /root/sbx_nxos/yang/nxos_rpms/
+        dest: /root/sbx_nxos/learning_labs/yang/nxos_rpms/
       with_items: "{{ urls }}"
 
         
@@ -37,11 +37,11 @@
       git:
         repo: https://github.com/YangModels/yang.git
         clone: yes
-        dest: /root/sbx_nxos/yang/yang
+        dest: /root/sbx_nxos/learning_labs/yang/yang
 
     - name: ENSURE THAT THE NTC LIBRARY DIR IS ABSENT
       file:
-        path: /root/sbx_nxos/yang/yang-prereqs/library/ntc-ansible
+        path: /root/sbx_nxos/learning_labs/yang/yang-prereqs/library/ntc-ansible
         state: absent
     
     - name: CLONE THE NTC MODULE
@@ -49,10 +49,10 @@
         repo: https://github.com/networktocode/ntc-ansible
         clone: yes
         recursive: yes
-        dest: /root/sbx_nxos/yang/yang-prereqs/library/ntc-ansible
+        dest: /root/sbx_nxos/learning_labs/yang/yang-prereqs/library/ntc-ansible
 
     - name: UPDATE NTC CONFIG FILE
       copy:
-        src: /root/sbx_nxos/yang/yang-prereqs/ntc_config_command.py
-        dest: /root/sbx_nxos/yang/yang-prereqs/library/ntc-ansible/library/ntc_config_command.py
+        src: /root/sbx_nxos/learning_labs/yang/yang-prereqs/ntc_config_command.py
+        dest: /root/sbx_nxos/learning_labs/yang/yang-prereqs/library/ntc-ansible/library/ntc_config_command.py
         

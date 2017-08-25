@@ -23,7 +23,7 @@
 
     - name: SCP THE NATIVE YANG RPMS TO SPINE SWITCHES
       nxos_file_copy:
-        local_file: "/root/sbx_nxos/yang/nxos_rpms/{{ item }}"
+        local_file: "/root/sbx_nxos/learning_labs/yang/nxos_rpms/{{ item }}"
         provider: "{{ nxos_provider }}"
       with_items: "{{ native_models }}"
 
