@@ -1,0 +1,11 @@
+---
+
+# Install the components needed by the POAP server
+- name: ENSURE THAT THE POAP DEPENDENCIES ARE AVAILABLE
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - python-flask
+    - python-flask-restful
+    - python-yaml

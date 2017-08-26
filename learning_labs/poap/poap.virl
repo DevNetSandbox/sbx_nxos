@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<topology xmlns="http://www.cisco.com/VIRL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="0.95" xsi:schemaLocation="http://www.cisco.com/VIRL https://raw.github.com/CiscoVIRL/schema/v0.95/virl.xsd">
+    <extensions>
+        <entry key="management_network" type="String">flat</entry>
+    </extensions>
+    <node name="nx-osv9000-1" type="SIMPLE" subtype="NX-OSv 9000" location="112,94" vmImage="NX-OSv 9000-7.0.3.I6.1 [b8a19e1a-9dfe-4b63-817f-a9347094502c]" vmFlavor="NX-OSv 9000-I6 [eeede0ab-36f9-4fc8-8e34-f4adb2c4cbea]" ipv4="192.168.0.1">
+        <extensions>
+            <entry key="static_mac" type="String">aa:aa:aa:aa:aa:aa</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="Auto-generate config" type="Boolean">false</entry>
+            <entry key="static_ip" type="String">172.16.30.101</entry>
+        </extensions>
+        <interface id="0" name="Ethernet1/1"/>
+        <interface id="1" name="Ethernet1/2"/>
+        <interface id="2" name="Ethernet1/3"/>
+        <interface id="3" name="Ethernet1/4"/>
+    </node>
+    <node name="nx-osv9000-3" type="SIMPLE" subtype="NX-OSv 9000" location="113,274" vmImage="NX-OSv 9000-7.0.3.I6.1 [b8a19e1a-9dfe-4b63-817f-a9347094502c]" vmFlavor="NX-OSv 9000-I6 [eeede0ab-36f9-4fc8-8e34-f4adb2c4cbea]" ipv4="192.168.0.3">
+        <extensions>
+            <entry key="static_mac" type="String">aa:aa:aa:aa:aa:ac</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="Auto-generate config" type="Boolean">false</entry>
+            <entry key="static_ip" type="String">172.16.30.103</entry>
+        </extensions>
+        <interface id="0" name="Ethernet1/1"/>
+        <interface id="1" name="Ethernet1/2"/>
+        <interface id="2" name="Ethernet1/3"/>
+    </node>
+    <node name="nx-osv9000-4" type="SIMPLE" subtype="NX-OSv 9000" location="413,264" vmImage="NX-OSv 9000-7.0.3.I6.1 [b8a19e1a-9dfe-4b63-817f-a9347094502c]" vmFlavor="NX-OSv 9000-I6 [eeede0ab-36f9-4fc8-8e34-f4adb2c4cbea]" ipv4="192.168.0.4">
+        <extensions>
+            <entry key="static_mac" type="String">aa:aa:aa:aa:aa:ad</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="Auto-generate config" type="Boolean">false</entry>
+            <entry key="static_ip" type="String">172.16.30.104</entry>
+        </extensions>
+        <interface id="0" name="Ethernet1/1"/>
+        <interface id="1" name="Ethernet1/2"/>
+        <interface id="2" name="Ethernet1/3"/>
+    </node>
+    <node name="nx-osv9000-2" type="SIMPLE" subtype="NX-OSv 9000" location="406,90" vmImage="NX-OSv 9000-7.0.3.I6.1 [b8a19e1a-9dfe-4b63-817f-a9347094502c]" vmFlavor="NX-OSv 9000-I6 [eeede0ab-36f9-4fc8-8e34-f4adb2c4cbea]" ipv4="192.168.0.2">
+        <extensions>
+            <entry key="static_mac" type="String">aa:aa:aa:aa:aa:ab</entry>
+            <entry key="static_ip" type="String">172.16.30.102</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="Auto-generate config" type="Boolean">false</entry>
+        </extensions>
+        <interface id="0" name="Ethernet1/1"/>
+        <interface id="1" name="Ethernet1/2"/>
+        <interface id="2" name="Ethernet1/3"/>
+        <interface id="3" name="Ethernet1/4"/>
+    </node>
+    <node name="csr1000v-1" type="SIMPLE" subtype="CSR1000v" location="577,99" vmImage="CSR1000v [aabe52fa-5a61-4237-bf3a-188c970872be]" vmFlavor="CSR1000v [e5a08c92-df3a-4078-92c1-0a388d525d07]" ipv4="192.168.0.11">
+        <extensions>
+            <entry key="static_ip" type="String">172.16.30.11</entry>
+            <entry key="config" type="String">hostname csr1000v-1&#xD;
+cdp run&#xD;
+ip route 0.0.0.0 0.0.0.0 172.16.30.254&#xD;
+&#xD;
+interface GigabitEthernet1&#xD;
+ description DHCP Relay for Management Network&#xD;
+ ip address 172.16.30.11 255.255.255.0&#xD;
+ ip helper-address 10.10.20.20&#xD;
+ negotiation auto&#xD;
+ no shut&#xD;
+ exit&#xD;
+</entry>
+        </extensions>
+    </node>
+    <annotations/>
+    <connection dst="/virl:topology/virl:node[2]/virl:interface[1]" src="/virl:topology/virl:node[1]/virl:interface[1]"/>
+    <connection dst="/virl:topology/virl:node[4]/virl:interface[1]" src="/virl:topology/virl:node[2]/virl:interface[2]"/>
+    <connection dst="/virl:topology/virl:node[3]/virl:interface[1]" src="/virl:topology/virl:node[1]/virl:interface[2]"/>
+    <connection dst="/virl:topology/virl:node[4]/virl:interface[2]" src="/virl:topology/virl:node[3]/virl:interface[2]"/>
+    <connection dst="/virl:topology/virl:node[4]/virl:interface[3]" src="/virl:topology/virl:node[1]/virl:interface[3]"/>
+</topology>

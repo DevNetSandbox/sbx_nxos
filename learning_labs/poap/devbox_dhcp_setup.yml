@@ -1,0 +1,45 @@
+---
+- hosts: devbox
+  become: true
+  vars:
+    dhcp_global_default_lease_time: 28800 # 8hrs
+    dhcp_global_max_lease_time: 43200 # 12 hrs
+    dhcp_global_domain_name: sbx.devnet.intra
+    dhcp_global_domain_name_servers:
+      - 208.67.222.222
+      - 208.67.220.220
+    dhcp_global_bootp: allow
+    dhcp_global_booting: allow
+    dhcp_global_other_options:
+      - tftp-server-address code 150 = ip-address
+
+    dhcp_subnets:
+      - ip: 10.10.20.0
+        netmask: 255.255.255.0
+      - ip: 172.16.30.0
+        default_lease_time: 3600
+        max_lease_time: 7200
+        netmask: 255.255.255.0
+        domain_name_servers: 208.67.222.222
+        routers: 172.16.30.254
+        tftp_server: 10.10.20.20
+        bootfile_name: poap_script.py
+
+    dhcp_hosts:
+      - name: nx-osv9000-1
+        mac: 'aa:aa:aa:aa:aa:aa'
+        ip: 172.16.30.101
+      - name: nx-osv9000-2
+        mac: 'aa:aa:aa:aa:aa:ab'
+        ip: 172.16.30.102
+      - name: nx-osv9000-3
+        mac: 'aa:aa:aa:aa:aa:ac'
+        ip: 172.16.30.103
+      - name: nx-osv9000-4
+        mac: 'aa:aa:aa:aa:aa:ad'
+        ip: 172.16.30.104
+      
+    dhcp6_enable: false
+
+  roles:
+    - dhcp_server

@@ -1,0 +1,4 @@
+---
+  - include: devbox_dhcp_setup.yml
+  - include: devbox_tftp_setup.yml
+  - include: devbox_poap_reqs.yml

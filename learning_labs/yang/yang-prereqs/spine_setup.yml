@@ -1,0 +1,56 @@
+---
+- name: COPY RPMS NXOS SPINES
+  hosts: spine
+  connection: local
+  gather_facts: no
+  tags:
+    - spine
+
+  vars:
+    nxos_provider:
+      username: admin
+      password: admin
+      host: "{{ inventory_hostname }}"
+      transport: cli
+
+    native_models:
+      - mtx-device-7_0_3_I6_1.1.0.0-r1705191346.x86_64.rpm
+      - mtx-infra-1.0.0-r1705191346.x86_64.rpm
+      - mtx-netconf-agent-1.0.1-r1705191346.x86_64.rpm
+
+  
+  tasks:
+
+    - name: SCP THE NATIVE YANG RPMS TO SPINE SWITCHES
+      nxos_file_copy:
+        local_file: "/root/sbx_nxos/learning_labs/yang/nxos_rpms/{{ item }}"
+        provider: "{{ nxos_provider }}"
+      with_items: "{{ native_models }}"
+
+
+
+- name: INSTALL THE RPMS AND START NETCONF ON THE NXOS
+  hosts: spine
+  connection: local
+  gather_facts: no
+  tags: install
+
+  vars:
+    nxos_provider:
+      username: admin
+      password: admin
+      host: "{{ inventory_hostname }}"
+      connection: ssh
+      platform: cisco_nxos
+
+
+  tasks:
+
+
+    - name: INSTALL THE RPMS
+      ntc_config_command:
+        provider: "{{ nxos_provider }}"
+        commands:
+          - "run bash sudo su"
+          - "yum install -y /bootflash/mtx*.rpm"
+          - "netconfctl start"

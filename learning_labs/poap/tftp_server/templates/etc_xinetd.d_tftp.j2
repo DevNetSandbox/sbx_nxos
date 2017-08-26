@@ -1,0 +1,16 @@
+# TFTP configuration
+#
+# {{ ansible_managed }}
+service tftp
+{
+  socket_type  = {{ tftp_socket_type }}
+  protocol     = {{ tftp_protocol }}
+  wait         = {{ tftp_wait }}
+  user         = {{ tftp_user }}
+  server       = {{ tftp_server }}
+  server_args  = {{ tftp_server_args }} {{ tftp_root_directory }}
+  disable      = {{ tftp_disable }}
+  per_source   = {{ tftp_per_source }}
+  cps          = {{ tftp_cps }}
+  flags        = {{ tftp_flags }}
+}
