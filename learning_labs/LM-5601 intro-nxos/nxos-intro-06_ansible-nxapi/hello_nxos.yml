@@ -1,9 +1,9 @@
 ---
   ###########################################################
-  #           Playbook to query dCloud switches             #
+  #           Playbook to query Sandbox switches             #
   ###########################################################
-  - name: Retrieve facts from dCloud switches
-    hosts: dcloud-switches
+  - name: Retrieve facts from Sandbox switches
+    hosts: sandbox-switches
     connection: local
 
     tasks:

@@ -1,9 +1,9 @@
 ---
   ###########################################################
-  #         Playbook to configure dCloud switches           #
+  #         Playbook to configure Sandbox switches           #
   ###########################################################
-  - name: Configuring dCloud switches
-    hosts: dcloud-switches
+  - name: Configuring Sandbox switches
+    hosts: sandbox-switches
     connection: local
 
     tasks:
