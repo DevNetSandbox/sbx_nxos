@@ -1,0 +1,7 @@
+[sandbox-servers] #This is a group definition
+10.10.20.20   # This is a host belonging to the sandbox-servers group
+
+[nxos-switches]  #This is a group definition
+172.16.30.101  # This is a host belonging to the nxos-switches group
+172.16.30.101  # This is a host belonging to the nxos-switches group
+```

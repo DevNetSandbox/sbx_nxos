@@ -1,0 +1,12 @@
+---
+  ###########################################################
+  #            Playbook to illustrates variables            #
+  ###########################################################
+  - name: Basics with variables
+    hosts: localhost
+    vars_files:
+      - vars.yml
+
+    tasks:
+      - name: "Exploring variables"
+        debug: msg="Hello {{user}}!"

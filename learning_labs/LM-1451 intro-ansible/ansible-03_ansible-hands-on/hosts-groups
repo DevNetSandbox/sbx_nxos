@@ -1,0 +1,9 @@
+[sandbox-servers:children]
+datacenter-east
+datacenter-west
+
+[datacenter-east]
+10.10.20.20
+
+[datacenter-west]
+10.10.20.20
