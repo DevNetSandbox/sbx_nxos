@@ -1,5 +1,5 @@
 # Setup environment for ansible playbooks
-# Credentials for DevNet DCI dCloud Pod
+# Credentials for Sandbox Pod
 
 # usage: source .ansible_env
 

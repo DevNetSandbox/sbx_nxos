@@ -1,0 +1,15 @@
+---
+  ###########################################################
+  #            Playbook to query Sandbox servers             #
+  ###########################################################
+  - name: Retrieve facts from Sandbox servers
+    hosts: sandbox-servers
+
+    tasks:
+      - name: "Push new host file:"
+        copy:
+          src: files/hosts
+          dest: /etc/hosts
+          owner: root
+          group: root
+          mode: 0644

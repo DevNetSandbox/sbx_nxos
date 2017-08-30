@@ -1,0 +1,32 @@
+- hosts: dcloud-servers
+  vars_files:
+    - vars/main.yml
+  roles:
+    - { role: geerlingguy.apache }
+
+
+  tasks:
+    - name: "Push new app"
+      copy:
+        src: "files/{{item}}"
+        dest: "{{app_path}}/{{item}}"
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+        "{{app_files}}"
+
+    - name: "Allow apache listen port through firewalld"
+      firewalld:
+        port: "{{apache_listen_port}}/tcp"
+        zone: public
+        permanent: true
+        state: enabled
+        immediate: true
+
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+    - vars/main.yml
+  roles:
+    - {role: spark_message}

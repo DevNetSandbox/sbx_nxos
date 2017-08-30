@@ -1,0 +1,8 @@
+[sandbox-servers]
+10.10.20.20
+
+[datacenter-east]
+10.10.20.20
+
+[datacenter-west]
+10.10.20.20

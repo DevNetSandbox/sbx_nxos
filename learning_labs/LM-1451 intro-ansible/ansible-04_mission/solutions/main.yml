@@ -1,0 +1,8 @@
+apache_listen_port: 80
+apache_create_vhosts: false
+app_files:
+  - index.html
+  - your-automation-is-on-point.jpeg
+app_path: /var/www/html
+spark_token: <ADD-SPARK-TOKEN-HERE>
+spark_room: <ADD-SPARK-ROOMNAME-HERE>

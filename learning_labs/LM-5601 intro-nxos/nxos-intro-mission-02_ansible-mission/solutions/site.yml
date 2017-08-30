@@ -1,4 +1,4 @@
-- hosts: dcloud_switches
+- hosts: sandbox_switches
   connection: local
   roles:
     - { role: nxos_common }

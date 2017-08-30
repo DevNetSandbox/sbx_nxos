@@ -1,0 +1,10 @@
+---
+  ###########################################################
+  #            Playbook to query Sandbox servers             #
+  ###########################################################
+  - name: Retrieve facts from Sandbox servers
+    hosts: sandbox-servers
+
+    tasks:
+      - name: "Hi! Here is my hostname:"
+        debug: msg="{{ansible_hostname}}"

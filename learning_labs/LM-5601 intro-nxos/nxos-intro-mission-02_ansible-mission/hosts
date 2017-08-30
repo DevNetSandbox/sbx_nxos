@@ -1,4 +1,4 @@
-[dcloud_switches:children]
+[sandbox_switches:children]
 nxos_leaf
 nxos_spine
 
