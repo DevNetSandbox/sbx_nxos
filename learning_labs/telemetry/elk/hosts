@@ -1,0 +1,2 @@
+[devbox]
+10.10.20.20 ansible_python_interpreter="/usr/bin/env python"

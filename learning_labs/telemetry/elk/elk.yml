@@ -1,0 +1,80 @@
+---
+- name: INSTALL THE ELK STACK FOR DEVNET
+  hosts: devbox
+  become: yes
+  gather_facts: no
+
+  vars:
+    services:
+      - elasticsearch
+      - logstash
+      - kibana
+
+  tasks:
+
+    - name: ENSURE THAT JAVA IS INSTALLED
+      yum:
+        name: java
+        state: installed
+      tags: install
+      
+    - name: ENSURE THAT THE REPO FILES ARE PRESENT
+      copy:
+        src: "./files/{{ item }}"
+        dest: "/etc/yum.repos.d/{{ item }}"
+      with_items:
+        - elasticsearch-5.x.repo
+        - logstash.repo
+      tags: install
+        
+    - name: ENSURE THAT THE ELK STACK IS INSTALLED
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ services }}"
+      tags: install
+
+    - name: UPDATE ELASTICSEARCH TO LISTEN ON ALL INTFS
+      lineinfile:
+        regexp: "#network.host:.* "
+        line: "network.host: 0.0.0.0"
+        dest: /etc/elasticsearch/elasticsearch.yml
+      notify:
+        - restart services
+      tags: configure
+
+    - name: UPDATE KIBANA TO LISTEN ON ALL INTFS
+      lineinfile:
+        regexp: "#server.host:.*"
+        line: "server.host: 0.0.0.0"
+        dest: /etc/kibana/kibana.yml
+      notify:
+        - restart services
+      tags: configure
+
+    - name: ENSURE THAT THE TEMPLATE FILE IS PRESENT
+      copy:
+        src: ./files/nxos_template.json
+        dest: /tmp/nxos_template.json
+      notify:
+        - restart services
+        
+    - name: ENSURE THAT THE LOGSTASH CONFIG IS UPDATED
+      copy:
+        src: ./files/nxos_log.conf
+        dest: /etc/logstash/conf.d/nxos_log.conf
+      notify:
+        - restart services
+      tags: configure
+
+
+  handlers:
+    - name: restart services
+      service:
+        name: "{{ item }}"
+        state: restarted
+      with_items: "{{ services }}"
+        
+        
+        
+      
