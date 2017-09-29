@@ -1,0 +1,7 @@
+{
+    "type": "fs",
+    "settings": {
+        "location": "/tmp/elk_backup",
+        "compress": true
+    }
+}
