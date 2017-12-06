@@ -3,6 +3,7 @@
 - name: SET UP YANG DEVBOX ENVIRONMENT
   hosts: devbox
   become: yes
+  gather_facts: no
   tags: devbox
 
   vars:
