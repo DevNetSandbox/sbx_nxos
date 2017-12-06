@@ -41,9 +41,11 @@ def start_nodes(simulation, nodes):
     r = requests.put(u, auth=(virl_user, virl_password))
     return r.json()
 
-def test_node_state(simulation, target_state):
+def test_node_state(simulation, target_state, test_nodes=None):
     nodes = get_nodes(simulation)
-    for node in nodes.keys(): 
+    if test_nodes == None: 
+        test_nodes = nodes
+    for node in test_nodes.keys(): 
         if not nodes[node]["state"] == target_state:
             return False
     return True
