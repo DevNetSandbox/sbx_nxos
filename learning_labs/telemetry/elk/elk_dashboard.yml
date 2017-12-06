@@ -1,0 +1,185 @@
+---
+- name: INSTALL THE ELK STACK FOR DEVNET
+  hosts: devbox
+  become: yes
+  gather_facts: no
+
+  vars:
+    services:
+      - elasticsearch
+      - logstash
+      - kibana
+    build_clean: no
+    repo_path: /tmp/elk_backup
+    repo_archive_name: elk_backup.tgz
+    url: http://localhost:9200
+    snapshot_name: snapshot1
+    
+
+  tasks:
+
+    - name: ENSURE THAT SOFTWARE IS UNINSTALLED
+      yum:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - java
+        - "{{ services }}"
+      when: build_clean | bool
+      tags: redo
+
+    - name: ENSURE THAT ELK DIRECTORIES ARE REMOVED
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - /etc/elasticsearch
+        - /etc/kibana
+        - /etc/logstash
+        - /etc/yum.repos.d/elasticsearch-5.x.repo
+        - /etc/yum.repos.d/logstash.repo
+        - /var/lib/logstash
+        - /var/lib/elasticsearch
+        - /var/lib/kibana
+      when: build_clean | bool
+      tags: redo
+      
+    - name: ENSURE THAT JAVA IS INSTALLED
+      yum:
+        name: java
+        state: installed
+      tags: install
+      
+    - name: ENSURE THAT THE REPO FILES ARE PRESENT
+      copy:
+        src: "./files/{{ item }}"
+        dest: "/etc/yum.repos.d/{{ item }}"
+      with_items:
+        - elasticsearch-5.x.repo
+        - logstash.repo
+      tags: install
+        
+    - name: ENSURE THAT THE ELK STACK IS INSTALLED
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ services }}"
+      tags: install
+
+    - name: UPDATE ELASTICSEARCH TO LISTEN ON ALL INTFS
+      lineinfile:
+        regexp: "#network.host:.* "
+        line: "network.host: 0.0.0.0"
+        dest: /etc/elasticsearch/elasticsearch.yml
+      notify:
+        - restart services
+      tags: configure
+
+    - name: ELASTICSEARCH REPO PATH
+      lineinfile:
+        line: "path.repo: {{ repo_path }}"
+        dest: /etc/elasticsearch/elasticsearch.yml
+      notify:
+        - restart services
+      tags: configure
+      
+    - name: UPDATE KIBANA TO LISTEN ON ALL INTFS
+      lineinfile:
+        regexp: "#server.host:.*"
+        line: "server.host: 0.0.0.0"
+        dest: /etc/kibana/kibana.yml
+      notify:
+        - restart services
+      tags: configure
+
+    - name: ENSURE THAT THE TEMPLATE FILE IS PRESENT
+      copy:
+        src: ./files/nxos_template.json
+        dest: /tmp/nxos_template.json
+      notify:
+        - restart services
+      tags: configure
+        
+    - name: ENSURE THAT THE LOGSTASH CONFIG IS UPDATED
+      copy:
+        src: ./files/nxos_log.conf
+        dest: /etc/logstash/conf.d/nxos_log.conf
+      notify:
+        - restart services
+      tags: configure
+
+
+  handlers:
+    - name: restart services
+      service:
+        name: "{{ item }}"
+        state: restarted
+      with_items: "{{ services }}"
+        
+        
+        
+      
+
+- name: RESTORE THE BACKED UP ELK SETTINGS
+  hosts: devbox
+  become: true
+  gather_facts: no
+
+  vars:
+    backup_name: elk_backup
+    path: /tmp
+    url: http://localhost:9200
+    snapshot_name: snapshot1
+    index_name: nxos_index
+
+  tasks:
+
+    - name: UNTAR THE BACKUP
+      unarchive:
+        src: "/root/sbx_nxos/learning_labs/telemetry/elk/files/{{ backup_name }}.tgz"
+        dest: /
+      tags: untar
+
+    - name: ENSURE THAT ELASTICSEARCH IS UP
+      wait_for:
+        port: 9200
+        delay: 10
+      tags: logical
+      
+    - name: INITIALIZE THE LOGICAL REPO
+      uri:
+        url: "{{ url }}/_snapshot/{{ backup_name }}"
+        method: PUT
+        body: "{{ lookup('file','./files/repo_create.json') }}"
+        body_format: json
+      tags: logical
+
+    # - name: ENSURE THE INDICES ARE BUILT      
+    #   wait_for:
+    #     port: 5601
+    #     delay: 300
+        
+    # - name: CLOSE THE INDICES
+    #   uri:
+    #     url: "{{ url }}/{{ item }}/_close"
+    #     method: POST
+    #   with_items:
+    #     - .kibana
+    #     - "{{ index_name }}"
+    #  tags: close_index         
+
+    - name: RESTORE THE BACKUP
+      uri:
+        url: "{{ url }}/_snapshot/{{ backup_name }}/{{ snapshot_name }}/_restore"
+        method: POST
+      tags: restore
+      
+    - name: OPEN THE INDICES
+      uri:
+        url: "{{ url }}/{{ item }}/_open"
+        method: POST
+      with_items:
+        - .kibana
+        - "{{ index_name }}"
+      tags: open_index
+        

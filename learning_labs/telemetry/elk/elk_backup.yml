@@ -1,0 +1,57 @@
+---
+- name: CREATE ELASTICSEARCH BACKUP REPO
+  hosts: devbox
+  gather_facts: no
+  become: true
+
+  vars:
+    backup_name: elk_backup
+    path: /tmp
+    url: http://localhost:9200
+    snapshot_name: snapshot1
+
+
+  tasks:
+    # TODOS: Assert successful return from the uri methods
+
+    - name: ENSURE BCKUP REPO PATH IN ELASTICSEARCH CFG
+      lineinfile:
+        line: "path.repo: {{ path }}/{{ backup_name }}"
+        dest: /etc/elasticsearch/elasticsearch.yml
+      tags: setup
+
+    - name: ENSURE THAT REPO DIR EXISTS
+      file:
+        path: "{{ path }}/{{ backup_name }}"
+        state: directory
+        mode: 0777
+      tags: setup
+
+    - name: RESTART ELASTICSEARCH
+      service:
+        name: elasticsearch
+        state: restarted
+      tags: setup
+
+    - name: INITIALIZE THE LOGICAL REPO
+      uri:
+        url: "{{ url }}/_snapshot/{{ backup_name }}"
+        method: PUT
+        body: "{{ lookup('file','./files/repo_create.json') }}"
+        body_format: json
+      tags: logical
+
+    - name: CREATE THE BACKUP ON THE HOST
+      uri:
+        url: "{{ url }}/_snapshot/{{ backup_name }}/{{ snapshot_name }}?wait_for_completion=true&pretty"
+        method: PUT
+      tags: backup
+          
+    - name: TAR THE BACKUP DIR
+      shell: tar cvfz  {{ path }}/{{ backup_name }}.tgz {{ path }}/{{ backup_name }}
+      tags: archive
+        
+        
+          
+        
+        
