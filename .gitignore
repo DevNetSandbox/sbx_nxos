@@ -91,3 +91,6 @@ ENV/
 # Ansible 
 *.retry
 
+# Lab Specific Content 
+nxos_rpms/
+learning_labs/yang/yang/
