@@ -5,31 +5,26 @@ import sys
 
 
 # Set the device variables
-
-DEVICES = ['172.16.30.101', '172.16.30.102']
+DEVICE = "sbx-nxos-mgmt.cisco.com"
 USER = 'admin'
-PASS = 'admin'
-PORT = 830
-DEVICE_NAMES = {'172.16.30.101': '(nx-osv9000-1)',
-                '172.16.30.102': '(nx-osv9000-2)' }
-
+PASS = 'Admin_1234!'
+PORT = 10000
 
 # create a main() method
 def main():
     """
     Main method that prints netconf capabilities of remote device.
     """
-    for device in DEVICES:
-        with manager.connect(host=device, port=PORT, username=USER,
-                             password=PASS, hostkey_verify=False,
-                             device_params={'name': 'nexus'},
-                             look_for_keys=False, allow_agent=False) as m:
+    with manager.connect(host=DEVICE, port=PORT, username=USER,
+                         password=PASS, hostkey_verify=False,
+                         device_params={'name': 'nexus'},
+                         look_for_keys=False, allow_agent=False) as m:
 
-            # print all NETCONF capabilities
-            print('\n***Remote Devices Capabilities for device {} {}***\n'.format(DEVICE_NAMES[device], device))
-            for capability in m.server_capabilities:
-                print(capability.split('?')[0])
-                
+        # print all NETCONF capabilities
+        print('\n***Remote Devices Capabilities for device {}***\n'.format(DEVICE))
+        for capability in m.server_capabilities:
+            print(capability.split('?')[0])
+
 
 if __name__ == '__main__':
     sys.exit(main())

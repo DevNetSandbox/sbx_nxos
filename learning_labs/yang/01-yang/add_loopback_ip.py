@@ -6,22 +6,18 @@ from lxml import etree
 
 
 # Set the device variables
-
-DEVICES = ['172.16.30.101', '172.16.30.102']
+DEVICE = "sbx-nxos-mgmt.cisco.com"
 USER = 'admin'
-PASS = 'admin'
-PORT = 830
-LOOPBACK_IP = {
-    '172.16.30.101': '10.99.99.1/24',
-    '172.16.30.102': '10.99.99.2/24'
-}
-DEVICE_NAMES = {'172.16.30.101': '(nx-osv9000-1)',
-                '172.16.30.102': '(nx-osv9000-2)' }
+PASS = 'Admin_1234!'
+PORT = 10000
+
+LOOPBACK_IP = "10.99.99.1/24"
+
 # create a main() method
 def main():
     """
     Main method that adds an IP address to interface loopback 99 to
-    both the spine switches.
+    switch.
     """
 
     loopback_ip_add = """
@@ -50,19 +46,17 @@ def main():
     </config>"""
 
 
-    for device in DEVICES:
-        with manager.connect(host=device, port=PORT, username=USER,
-                             password=PASS, hostkey_verify=False,
-                             device_params={'name': 'nexus'},
-                             look_for_keys=False, allow_agent=False) as m:
-            
-            # Add the loopback interface 
-            print("\nNow adding IP address {} to device {} {}...\n".format(LOOPBACK_IP[device], DEVICE_NAMES[device],
-                            device))
-            new_ip = loopback_ip_add.format(LOOPBACK_IP[device])
-            netconf_response = m.edit_config(target='running', config=new_ip)
-            # Parse the XML response
-            print(netconf_response)
+    with manager.connect(host=DEVICE, port=PORT, username=USER,
+                         password=PASS, hostkey_verify=False,
+                         device_params={'name': 'nexus'},
+                         look_for_keys=False, allow_agent=False) as m:
+
+        # Add the loopback interface
+        print("\nNow adding IP address {} to device {}...\n".format(LOOPBACK_IP, DEVICE))
+        new_ip = loopback_ip_add.format(LOOPBACK_IP)
+        netconf_response = m.edit_config(target='running', config=new_ip)
+        # Parse the XML response
+        print(netconf_response)
 
 if __name__ == '__main__':
     sys.exit(main())

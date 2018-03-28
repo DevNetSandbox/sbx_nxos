@@ -6,17 +6,14 @@ from lxml import etree
 
 
 # Set the device variables
-
-DEVICES = ['172.16.30.101', '172.16.30.102']
+DEVICE = "sbx-nxos-mgmt.cisco.com"
 USER = 'admin'
-PASS = 'admin'
-PORT = 830
-LOOPBACK_IP = {
-    '172.16.30.101': {'loopback': 'lo101', 'ip': '10.101.1.1/24', 'name': 'Loopback101'},
-    '172.16.30.102': {'loopback': 'lo102', 'ip': '10.102.1.2/24', 'name': 'Loopback102'}
-}
-DEVICE_NAMES = {'172.16.30.101': '(nx-osv9000-1)',
-                '172.16.30.102': '(nx-osv9000-2)' }
+PASS = 'Admin_1234!'
+PORT = 10000
+
+LOOPBACK_IP = {'loopback': 'lo101', 'ip': '10.101.1.1/24', 'name': 'Loopback101'}
+
+
 # create a main() method
 def main():
     """
@@ -58,21 +55,26 @@ def main():
 </config>"""
 
 
-    for device in DEVICES:
-        with manager.connect(host=device, port=PORT, username=USER,
-                             password=PASS, hostkey_verify=False,
-                             device_params={'name': 'nexus'},
-                             look_for_keys=False, allow_agent=False) as m:
+    with manager.connect(host=DEVICE, port=PORT, username=USER,
+                         password=PASS, hostkey_verify=False,
+                         device_params={'name': 'nexus'},
+                         look_for_keys=False, allow_agent=False) as m:
 
-            # Add the loopback interface
-            print("\nNow adding IP address {} to intf {} on device {} {}...\n".  format(LOOPBACK_IP[device]['ip'],
-                              LOOPBACK_IP[device]['name'], DEVICE_NAMES[device],
-                              device))
+        # Add the loopback interface
+        print("\nNow adding IP address {} to intf {} on device {}...\n".format(
+                        LOOPBACK_IP['ip'],
+                        LOOPBACK_IP['name'],
+                        DEVICE)
+                        )
 
-            new_ip = add_ip_interface.format(LOOPBACK_IP[device]['loopback'], LOOPBACK_IP[device]['ip'])
-            netconf_response = m.edit_config(target='running', config=new_ip)
-            # Parse the XML response
-            print(netconf_response)
+        new_ip = add_ip_interface.format(
+                LOOPBACK_IP['loopback'],
+                LOOPBACK_IP['ip']
+            )
+
+        netconf_response = m.edit_config(target='running', config=new_ip)
+        # Parse the XML response
+        print(netconf_response)
 
 
 if __name__ == '__main__':
