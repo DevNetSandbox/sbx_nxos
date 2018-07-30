@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<topology xmlns="http://www.cisco.com/VIRL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="0.95" xsi:schemaLocation="http://www.cisco.com/VIRL https://raw.github.com/CiscoVIRL/schema/v0.95/virl.xsd">
+    <extensions>
+        <entry key="management_lxc" type="Boolean">false</entry>
+        <entry key="management_network" type="String">flat</entry>
+    </extensions>
+    <node name="nx-osv9000-1" type="SIMPLE" subtype="NX-OSv 9000" location="112,94" ipv4="192.168.0.1">
+        <extensions>
+            <entry key="static_mac" type="String">aa:aa:aa:aa:aa:aa</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="Auto-generate config" type="Boolean">false</entry>
+            <entry key="static_ip" type="String">172.16.30.101</entry>
+            <entry key="config" type="String">power redundancy-mode combined force
+
+hostname nx-osv9000-1
+
+feature telnet
+feature nxapi
+feature bash-shell
+feature scp-server
+
+no password strength-check
+username admin password 5 $1$KuOSBsvW$Cy0TSD..gEBGBPjzpDgf51  role network-admin
+username adminbackup password 5 !  role network-operator
+username cisco password 5 $1$Nk7ZkwH0$fyiRmMMfIheqE3BqvcL0C1  role network-operator
+username cisco role network-admin
+username lab password 5 $1$buoy/oqy$.EXQz8rCn72ii8qtdldj00  role network-admin
+ip domain-lookup
+snmp-server user lab network-admin auth md5 0x5ceb414591539ee35159fca86fdfa101 priv 0x5ceb414591539ee35159fca86fdfa101 localizedkey
+snmp-server user admin network-admin auth md5 0x328945d53e05e8e7207f8c20b142f0b7 priv 0x328945d53e05e8e7207f8c20b142f0b7 localizedkey
+snmp-server user cisco network-operator auth md5 0x55b3c64a53fb95518e75358ee75e82e9 priv 0x55b3c64a53fb95518e75358ee75e82e9 localizedkey
+
+vlan 1
+
+vrf context management
+  ip route 0.0.0.0/0 172.16.30.254
+
+
+interface Ethernet1/1
+  description Ethernet1/1
+  no switchport
+  mac-address fa16.3e00.1001
+  no shutdown
+
+interface Ethernet1/2
+  description Ethernet1/2
+  no switchport
+  mac-address fa16.3e00.1002
+  no shutdown
+
+interface Ethernet1/3
+  description Ethernet1/3
+  no switchport
+  mac-address fa16.3e00.1003
+  no shutdown
+
+interface Ethernet1/4
+  description Ethernet1/4
+  no switchport
+  mac-address fa16.3e00.1004
+  no shutdown
+
+interface mgmt0
+  description OOB Management
+  vrf member management
+  ip address 172.16.30.101/24
+
+interface loopback0
+  description Loopback
+  ip address 192.168.0.1/32
+
+line console
+line vty
+</entry>
+        </extensions>
+        <interface id="0" name="Ethernet1/1"/>
+        <interface id="1" name="Ethernet1/2"/>
+        <interface id="2" name="Ethernet1/3"/>
+        <interface id="3" name="Ethernet1/4"/>
+    </node>
+    <node name="nx-osv9000-2" type="SIMPLE" subtype="NX-OSv 9000" location="406,90" ipv4="192.168.0.2">
+        <extensions>
+            <entry key="static_mac" type="String">aa:aa:aa:aa:aa:ab</entry>
+            <entry key="static_ip" type="String">172.16.30.102</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="Auto-generate config" type="Boolean">false</entry>
+            <entry key="config" type="String">power redundancy-mode combined force
+
+hostname nx-osv9000-2
+
+feature telnet
+feature nxapi
+feature bash-shell
+feature scp-server
+
+no password strength-check
+username admin password 5 $1$KuOSBsvW$Cy0TSD..gEBGBPjzpDgf51  role network-admin
+username adminbackup password 5 !  role network-operator
+username cisco password 5 $1$Nk7ZkwH0$fyiRmMMfIheqE3BqvcL0C1  role network-operator
+username cisco role network-admin
+username lab password 5 $1$buoy/oqy$.EXQz8rCn72ii8qtdldj00  role network-admin
+ip domain-lookup
+snmp-server user lab auth md5 0x5ceb414591539ee35159fca86fdfa101 priv 0x5ceb414591539ee35159fca86fdfa101 localizedkey engineID 128:0:0:9:3:170:170:170:170:170:170
+snmp-server user admin auth md5 0x328945d53e05e8e7207f8c20b142f0b7 priv 0x328945d53e05e8e7207f8c20b142f0b7 localizedkey engineID 128:0:0:9:3:170:170:170:170:170:170
+snmp-server user cisco auth md5 0x55b3c64a53fb95518e75358ee75e82e9 priv 0x55b3c64a53fb95518e75358ee75e82e9 localizedkey engineID 128:0:0:9:3:170:170:170:170:170:170
+
+vlan 1
+
+vrf context management
+  ip route 0.0.0.0/0 172.16.30.254
+
+interface Ethernet1/1
+  description Ethernet1/1
+  no switchport
+  mac-address fa16.3e00.2001
+  no shutdown
+
+interface Ethernet1/2
+  description Ethernet1/2
+  no switchport
+  mac-address fa16.3e00.2002
+  no shutdown
+
+interface Ethernet1/3
+  description Ethernet1/3
+  no switchport
+  mac-address fa16.3e00.2003
+  no shutdown
+
+interface Ethernet1/4
+  description Ethernet1/4
+  no switchport
+  mac-address fa16.3e00.2004
+  no shutdown
+
+interface mgmt0
+  description OOB Management
+  vrf member management
+  ip address 172.16.30.102/24
+
+interface loopback0
+  description Loopback
+  ip address 192.168.0.2/32
+
+line console
+line vty
+</entry>
+        </extensions>
+        <interface id="0" name="Ethernet1/1"/>
+        <interface id="1" name="Ethernet1/2"/>
+        <interface id="2" name="Ethernet1/3"/>
+        <interface id="3" name="Ethernet1/4"/>
+    </node>
+
+    <node name="nx-osv9000-3" type="SIMPLE" subtype="NX-OSv 9000" ipv4="192.168.0.3">
+        <extensions>
+            <entry key="static_mac" type="String">aa:aa:aa:aa:aa:ac</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="Auto-generate config" type="Boolean">false</entry>
+            <entry key="static_ip" type="String">172.16.30.103</entry>
+            <entry key="config" type="String">power redundancy-mode combined force
+
+hostname nx-osv9000-3
+
+feature telnet
+feature nxapi
+feature bash-shell
+feature scp-server
+
+no password strength-check
+username admin password 5 $1$KuOSBsvW$Cy0TSD..gEBGBPjzpDgf51  role network-admin
+username adminbackup password 5 !  role network-operator
+username cisco password 5 $1$Nk7ZkwH0$fyiRmMMfIheqE3BqvcL0C1  role network-operator
+username cisco role network-admin
+username lab password 5 $1$buoy/oqy$.EXQz8rCn72ii8qtdldj00  role network-admin
+ip domain-lookup
+snmp-server user lab auth md5 0x5ceb414591539ee35159fca86fdfa101 priv 0x5ceb414591539ee35159fca86fdfa101 localizedkey engineID 128:0:0:9:3:170:170:170:170:170:170
+snmp-server user admin auth md5 0x328945d53e05e8e7207f8c20b142f0b7 priv 0x328945d53e05e8e7207f8c20b142f0b7 localizedkey engineID 128:0:0:9:3:170:170:170:170:170:170
+snmp-server user cisco auth md5 0x55b3c64a53fb95518e75358ee75e82e9 priv 0x55b3c64a53fb95518e75358ee75e82e9 localizedkey engineID 128:0:0:9:3:170:170:170:170:170:170
+
+vlan 1
+
+vrf context management
+  ip route 0.0.0.0/0 172.16.30.254
+
+interface Ethernet1/1
+  description Ethernet1/1
+  no switchport
+  mac-address fa16.3e00.3001
+  no shutdown
+
+interface Ethernet1/2
+  description Ethernet1/2
+  no switchport
+  mac-address fa16.3e00.3002
+  no shutdown
+
+interface Ethernet1/3
+  description Ethernet1/3
+  no switchport
+  mac-address fa16.3e00.3003
+  no shutdown
+
+interface Ethernet1/4
+  description Ethernet1/4
+  no switchport
+  mac-address fa16.3e00.3004
+  no shutdown
+
+interface mgmt0
+  description OOB Management
+  vrf member management
+  ip address 172.16.30.103/24
+
+interface loopback0
+  description Loopback
+  ip address 192.168.0.3/32
+
+line console
+line vty
+</entry>
+        </extensions>
+        <interface id="0" name="Ethernet1/1"/>
+        <interface id="1" name="Ethernet1/2"/>
+        <interface id="2" name="Ethernet1/3"/>
+    </node>
+    <node name="nx-osv9000-4" type="SIMPLE" subtype="NX-OSv 9000" location="413,264" ipv4="192.168.0.4">
+        <extensions>
+            <entry key="static_mac" type="String">aa:aa:aa:aa:aa:ad</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="Auto-generate config" type="Boolean">false</entry>
+            <entry key="static_ip" type="String">172.16.30.104</entry>
+            <entry key="config" type="String">power redundancy-mode combined force
+
+hostname nx-osv9000-4
+
+feature telnet
+feature nxapi
+feature bash-shell
+feature scp-server
+
+no password strength-check
+username admin password 5 $1$KuOSBsvW$Cy0TSD..gEBGBPjzpDgf51  role network-admin
+username adminbackup password 5 !  role network-operator
+username cisco password 5 $1$Nk7ZkwH0$fyiRmMMfIheqE3BqvcL0C1  role network-operator
+username cisco role network-admin
+username lab password 5 $1$buoy/oqy$.EXQz8rCn72ii8qtdldj00  role network-admin
+ip domain-lookup
+snmp-server user lab auth md5 0x5ceb414591539ee35159fca86fdfa101 priv 0x5ceb414591539ee35159fca86fdfa101 localizedkey engineID 128:0:0:9:3:170:170:170:170:170:170
+snmp-server user admin auth md5 0x328945d53e05e8e7207f8c20b142f0b7 priv 0x328945d53e05e8e7207f8c20b142f0b7 localizedkey engineID 128:0:0:9:3:170:170:170:170:170:170
+snmp-server user cisco auth md5 0x55b3c64a53fb95518e75358ee75e82e9 priv 0x55b3c64a53fb95518e75358ee75e82e9 localizedkey engineID 128:0:0:9:3:170:170:170:170:170:170
+
+vlan 1
+
+vrf context management
+  ip route 0.0.0.0/0 172.16.30.254
+hardware forwarding unicast trace
+
+interface Ethernet1/1
+  description Ethernet1/1
+  no switchport
+  mac-address fa16.3e00.4001
+  no shutdown
+
+interface Ethernet1/2
+  description Ethernet1/2
+  no switchport
+  mac-address fa16.3e00.4001
+  no shutdown
+
+interface Ethernet1/3
+  description Ethernet1/3
+  no switchport
+  mac-address fa16.3e00.4003
+  no shutdown
+
+interface Ethernet1/4
+  description Ethernet1/4
+  no switchport
+  mac-address fa16.3e00.4004
+  no shutdown
+
+interface mgmt0
+  description OOB Management
+  vrf member management
+  ip address 172.16.30.104/24
+
+interface loopback0
+  description Loopback
+  ip address 192.168.0.4/32
+
+line console
+line vty
+</entry>
+        </extensions>
+        <interface id="0" name="Ethernet1/1"/>
+        <interface id="1" name="Ethernet1/2"/>
+        <interface id="2" name="Ethernet1/3"/>
+    </node>
+
+    <annotations/>
+    <connection src="/virl:topology/virl:node[1]/virl:interface[1]" dst="/virl:topology/virl:node[3]/virl:interface[1]"/>
+    <connection src="/virl:topology/virl:node[1]/virl:interface[2]" dst="/virl:topology/virl:node[4]/virl:interface[1]"/>
+    <connection src="/virl:topology/virl:node[2]/virl:interface[1]" dst="/virl:topology/virl:node[3]/virl:interface[2]"/>
+    <connection src="/virl:topology/virl:node[2]/virl:interface[2]" dst="/virl:topology/virl:node[4]/virl:interface[2]"/>
+    <connection src="/virl:topology/virl:node[1]/virl:interface[3]" dst="/virl:topology/virl:node[2]/virl:interface[3]"/>
+    <connection src="/virl:topology/virl:node[1]/virl:interface[4]" dst="/virl:topology/virl:node[2]/virl:interface[4]"/>
+</topology>
