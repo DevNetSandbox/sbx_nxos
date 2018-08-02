@@ -2,10 +2,12 @@
 - name: Disable OSPF Feature
   hosts: switches
   connection: local
-  tasks: 
+  tasks:
     - name: Disable OSPF Feature
-      nxos_feature: 
+      nxos_feature:
         host: "{{ inventory_hostname }}"
         transport: nxapi
+        use_ssl: yes
+        validate_certs: no
         feature: ospf
         state: disabled

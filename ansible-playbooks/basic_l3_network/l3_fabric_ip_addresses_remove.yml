@@ -2,12 +2,14 @@
 - name: Remove IP Connectivity for L3 Fabric
   hosts: switches
   connection: local
-  tasks: 
+  tasks:
     - name: Reset Interface Configuration
       with_items: "{{ l3_fabric.interfaces }}"
-      nxos_interface: 
+      nxos_interface:
         host: "{{ inventory_hostname }}"
-        transport: nxapi 
+        transport: nxapi
+        use_ssl: yes
+        validate_certs: no
         interface: "{{ item.name }}"
         mode: layer3
         description: "{{ item.name }}"
@@ -18,4 +20,6 @@
         host: "{{ inventory_hostname }}"
         state: absent
         transport: nxapi
+        use_ssl: yes
+        validate_certs: no
         interface: "{{ item.name }}"
