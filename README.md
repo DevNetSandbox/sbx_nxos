@@ -14,79 +14,63 @@ And should you develop some interesting code targeting the Sandbox and want to s
 
 This DevNet Sandbox leverages VIRL for building and managing the environment, however there is no need for you as the user to be familiar with VIRL to leverage the Sandbox resources.  
 
-Should you run into issues with one or more of the nodes in the sandbox, or simply wish to restart the full environment, the following scripts are available to use within the [sbx-mgmt](sbx-mgmt) folder. 
+Should you run into issues with one or more of the nodes in the sandbox, or simply wish to restart the full environment you can leverage [virlutils](https://github.com/CiscoDevNet/virlutils) to manage the simulation.  
 
-* [node\_console\_info.py](sbx-mgmt/node_console_info.py): Print the console port connection information for each node in the simulation.  With this information you can telnet and connect directly to the console of each node.  
-* [status-sbx.py](sbx-mgmt/status-sbx.py): Check the status of the devices in the simulation.  A status of **ACTIVE** indicates a node that is booted.  
-* [restart-sbx.py](sbx-mgmt/restart-sbx.py): Restart an individual the nodes, or all nodes, in the simulation.  The restart of the nodes takes about 2 minutes, but the Nexus 9000v's can take up to 15 minutes to fully boot.  The script will provide console connection details for monitoring boot.
+Here is a simple walkthrough of managing the network.  
 
-### Using the Scripts 
+1. In the `sbx_nxos` directory you'll see a file [`topology.virl`](topology.virl).  This file is the network definition for the simulation.  
+1. If you are working from your own local workstation, and not the provided DevBox in the reservation, you'll need to setup `virlutils` before continuing.  
+    1. Install `virlutils` with `pip install virlutils` 
+    2. Find the name of the simulation environment with `virl ls --all` 
 
-Before you can run the scripts, you need to install the Python module dependencies.  For convenience a [`requirements.txt`](sbx-mgmt/requirements.txt) file is included in the `sbx-mgmt` directory.  
+        ```bash
+        Running Simulations
+        ╒═════════════════════════╤══════════╤════════════════════════════╤═══════════╕
+        │ Simulation              │ Status   │ Launched                   │ Expires   │
+        ╞═════════════════════════╪══════════╪════════════════════════════╪═══════════╡
+        │ sbx_nxos_default_0EAiXi │ ACTIVE   │ 2018-08-06T19:27:41.297570 │           │
+        ╘═════════════════════════╧══════════╧════════════════════════════╧═══════════╛
+        ```    
 
-```bash
-# from the sbx_nxos directory and virtual env
+    3. Activate this simluation for `virlutils`  with `virl use SIMULATION_NAME`.  For example: 
 
-pip install -r sbx-mgmt/requirements.txt 
-```
+        ```bash
+        $virl use sbx_nxos_default_0EAiXi
+        Now using VIRL simulation sbx_nxos_default_0EAiXi
+        ```
+    
+1. View the nodes that are running. 
 
-Now you can execute the scripts like this: 
+    ```bash
+    $ virl nodes 
+    
+    ╒══════════════╤═════════════╤═════════╤═════════════╤════════════╤══════════════════════╤════════════════════╕
+    │ Node         │ Type        │ State   │ Reachable   │ Protocol   │ Management Address   │ External Address   │
+    ╞══════════════╪═════════════╪═════════╪═════════════╪════════════╪══════════════════════╪════════════════════╡
+    │ nx-osv9000-1 │ NX-OSv 9000 │ ACTIVE  │ REACHABLE   │ telnet     │ 172.16.30.101        │ N/A                │
+    ├──────────────┼─────────────┼─────────┼─────────────┼────────────┼──────────────────────┼────────────────────┤
+    │ nx-osv9000-2 │ NX-OSv 9000 │ ACTIVE  │ REACHABLE   │ telnet     │ 172.16.30.102        │ N/A                │
+    ├──────────────┼─────────────┼─────────┼─────────────┼────────────┼──────────────────────┼────────────────────┤
+    │ nx-osv9000-3 │ NX-OSv 9000 │ ACTIVE  │ REACHABLE   │ telnet     │ 172.16.30.103        │ N/A                │
+    ├──────────────┼─────────────┼─────────┼─────────────┼────────────┼──────────────────────┼────────────────────┤
+    │ nx-osv9000-4 │ NX-OSv 9000 │ ACTIVE  │ REACHABLE   │ telnet     │ 172.16.30.104        │ N/A                │
+    ╘══════════════╧═════════════╧═════════╧═════════════╧════════════╧══════════════════════╧════════════════════╛
+    ```
 
-#### Get Console Info
-```bash
-# from the sbx_nxos directory and virtual env
-cd sbx-mgmt
+1. You can connect to individual nodes Console or VTY Lines with `virl console NODE` or `virl ssh NODE` or `virl telnet NODE`.  
 
-python node_console_info.py
+    ```bash
+    $virl ssh nx-osv9000-1
+    Attemping ssh connectionto nx-osv9000-1 at 172.16.30.101
+    Warning: Permanently added '172.16.30.101' (RSA) to the list of known hosts.
+    User Access Verification
+    Password:
+    ```
 
-VIRL Simulation Name: API-POAP
+1. If you look at `virl --help`, you'll see you can also `virl start` and `virl stop` individual nodes should there be a problem.  
+1. Finally, you can completely restart the simulation by first `virl down` followed by `virl up`.  This will destroy and restart the simulation.  
 
-Retrieving Console Connection Details:
-    Console to csr1000v-1 -> `telnet 10.10.20.160 17012`
-    Console to nx-osv9000-4 -> `telnet 10.10.20.160 17020`
-    Console to nx-osv9000-1 -> `telnet 10.10.20.160 17014`
-    Console to nx-osv9000-3 -> `telnet 10.10.20.160 17018`
-    Console to nx-osv9000-2 -> `telnet 10.10.20.160 17016`
-```
-
-#### Get Status
-```bash
-# from the sbx_nxos directory and virtual env
-cd sbx-mgmt
-
-python status-sbx.py
-
-# Sample output
-VIRL Simulation Name: nxos_9k-34mbMF
-
-~mgmt-lxc: Status ACTIVE
-nx-osv9000-4: Status ACTIVE
-nx-osv9000-1: Status ACTIVE
-nx-osv9000-3: Status ACTIVE
-nx-osv9000-2: Status ACTIVE
-server-2: Status ACTIVE
-server-1: Status ACTIVE
-```
-
-#### Restart Nodes
-```bash 
-# from the sbx_nxos directory and virtual env
-cd sbx-mgmt
-
-python restart-sbx.py
-
-VIRL Simulation Name: API-POAP
-
-Which node would you like to restart?
-  0 - csr1000v-1: Status ACTIVE
-  1 - ~mgmt-lxc: Status ACTIVE
-  2 - nx-osv9000-4: Status ACTIVE
-  3 - nx-osv9000-1: Status ACTIVE
-  4 - nx-osv9000-3: Status ACTIVE
-  5 - nx-osv9000-2: Status ACTIVE
-  a - Restart All Nodes
-Enter 0 - 5 to choose a node, or a for all
-```
+For more information on how to use `virlutils` to manage this and other VIRL/CML simulations, see the [documentation on GitHub](https://github.com/CiscoDevNet/virlutils).
 
 ## Learning Labs
 
