@@ -40,13 +40,13 @@ If you'd rather just download the code without mucking around with `git`, you ca
 
 ## Setup Ansible 
 
-Ansible is written in Python which means you set it up using the same steps as any Python application.  Like other Python projects, we highly recommend leveraging [Virtual Environments](http://docs.python-guide.org/en/latest/dev/virtualenvs/) with Ansible for the best experience.  Also, Ansible is currently only fully supported with Python 2.7, Python 3 support is in "preview".  
+Ansible is written in Python which means you set it up using the same steps as any Python application.  Like other Python projects, we highly recommend leveraging [Virtual Environments](http://docs.python-guide.org/en/latest/dev/virtualenvs/) with Ansible for the best experience.  
 
 Follow these steps to create a virtual environment and install the requirements.  
 
 ```bash
-# Here we explicitly create the venv with Python 2.7
-virtualenv venv --python=python2.7
+# Here we explicitly create the venv with Python 3
+virtualenv venv --python=python3
 source venv/bin/activate 
 pip install -r requirements.txt
 ```
