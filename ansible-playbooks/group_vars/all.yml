@@ -1,3 +1,10 @@
+provider:
+  host: "{{ inventory_hostname }}"
+  transport: nxapi
+  use_ssl: yes
+  validate_certs: no
+  timeout: 20
+
 vlans:
   - vlan_id: 10
     name: Network10
@@ -6,7 +13,7 @@ vlans:
     gw_mask: 24
     gw_addr: 10.30.1.1
 
-ospf: 
+ospf:
   process: 0
   area: 0
 
