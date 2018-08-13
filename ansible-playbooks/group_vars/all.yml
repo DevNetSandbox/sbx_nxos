@@ -1,6 +1,6 @@
 provider:
   host: "{{ inventory_hostname }}"
-  transport: nxapi
+  transport: cli
   use_ssl: yes
   validate_certs: no
   timeout: 20
