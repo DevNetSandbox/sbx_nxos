@@ -6,10 +6,7 @@
     - name: Reset Interface Configuration
       with_items: "{{ l3_fabric.interfaces }}"
       nxos_interface:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         interface: "{{ item.name }}"
         mode: layer3
         description: "{{ item.name }}"
@@ -17,9 +14,6 @@
     - name: Remove IPv4 Address on Interface
       with_items: "{{ l3_fabric.interfaces }}"
       nxos_ip_interface:
-        host: "{{ inventory_hostname }}"
+        provider: "{{ provider }}"
         state: absent
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
         interface: "{{ item.name }}"

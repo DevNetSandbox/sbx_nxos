@@ -5,9 +5,6 @@
   tasks:
     - name: Disable OSPF Feature
       nxos_feature:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         feature: ospf
         state: disabled

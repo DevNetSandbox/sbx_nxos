@@ -5,10 +5,7 @@
   tasks:
     - name: Enable BGP Feature
       nxos_feature:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         feature: bgp
         state: enabled
 - name: Setup BGP on Switches
@@ -17,10 +14,7 @@
   tasks:
     - name: Configure BGP
       nxos_bgp:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         asn: "{{ bgp.asn }}"
         vrf: default
         router_id: "{{ bgp.router_id }}"
@@ -28,10 +22,7 @@
     - name: Configure Neighbors
       with_items: "{{ bgp.neighbors }}"
       nxos_bgp_neighbor:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         asn: "{{ bgp.asn }}"
         neighbor: "{{ item.neighbor }}"
         remote_as: "{{ item.asn }}"
@@ -41,10 +32,7 @@
     - name: Configure Neighbors ipv4 Address Family
       with_items: "{{ bgp.neighbors }}"
       nxos_bgp_neighbor_af:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         asn: "{{ bgp.asn }}"
         neighbor: "{{ item.neighbor }}"
         afi: ipv4
@@ -52,10 +40,7 @@
         state: present
     - name: Configure Default ipv4 Address Family
       nxos_bgp_af:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         asn: "{{ bgp.asn }}"
         vrf: default
         afi: ipv4

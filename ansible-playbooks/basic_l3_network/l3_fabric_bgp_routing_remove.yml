@@ -5,9 +5,6 @@
   tasks:
     - name: Disable BGP Feature
       nxos_feature:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         feature: bgp
         state: disabled

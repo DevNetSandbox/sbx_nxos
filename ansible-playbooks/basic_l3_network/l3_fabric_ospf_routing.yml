@@ -5,10 +5,7 @@
   tasks:
     - name: Enable OSPF Feature
       nxos_feature:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         feature: ospf
         state: enabled
 
@@ -18,19 +15,13 @@
   tasks:
     - name: Configure OSPF
       nxos_ospf:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         ospf: "{{ ospf.process }}"
         state: present
     - name: Enable OSPF on Interswitch Links
       with_items: "{{ l3_fabric.interfaces }}"
       nxos_interface_ospf:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         interface: "{{ item.name }}"
         ospf: "{{ ospf.process }}"
         area: "{{ ospf.area }}"
@@ -38,10 +29,7 @@
     - name: Enable OSPF on Loopback Interfaces Links
       with_items: "{{ local_loopbacks }}"
       nxos_interface_ospf:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
-        use_ssl: yes
-        validate_certs: no
+        provider: "{{ provider }}"
         interface: "{{ item.name }}"
         ospf: "{{ ospf.process }}"
         area: "{{ ospf.area }}"
