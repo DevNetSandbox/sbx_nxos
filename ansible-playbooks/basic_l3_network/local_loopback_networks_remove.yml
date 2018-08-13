@@ -4,6 +4,8 @@
   connection: local
   tasks:
     - name: Destroy Local Loopback Interfaces
+      loop_control:
+        pause: 1
       with_items: "{{ local_loopbacks }}"
       nxos_interface:
         host: "{{ inventory_hostname }}"

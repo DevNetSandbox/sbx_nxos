@@ -4,6 +4,8 @@
   connection: local
   tasks:
     - name: Create Loopback Interface
+      loop_control:
+        pause: 1
       with_items: "{{ local_loopbacks }}"
       nxos_interface:
         host: "{{ inventory_hostname }}"
@@ -15,6 +17,8 @@
         description: "{{ item.desc }}"
         admin_state: up
     - name: Configure IPv4 Address on Interface
+      loop_control:
+        pause: 1
       with_items: "{{ local_loopbacks }}"
       nxos_ip_interface:
         host: "{{ inventory_hostname }}"

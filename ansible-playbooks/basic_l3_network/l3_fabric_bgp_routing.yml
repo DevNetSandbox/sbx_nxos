@@ -20,6 +20,8 @@
         router_id: "{{ bgp.router_id }}"
         state: present
     - name: Configure Neighbors
+      loop_control:
+        pause: 1
       with_items: "{{ bgp.neighbors }}"
       nxos_bgp_neighbor:
         provider: "{{ provider }}"
@@ -30,6 +32,8 @@
         update_source: "{{ item.update_source }}"
         state: present
     - name: Configure Neighbors ipv4 Address Family
+      loop_control:
+        pause: 1
       with_items: "{{ bgp.neighbors }}"
       nxos_bgp_neighbor_af:
         provider: "{{ provider }}"

@@ -19,6 +19,8 @@
         ospf: "{{ ospf.process }}"
         state: present
     - name: Enable OSPF on Interswitch Links
+      loop_control:
+        pause: 1
       with_items: "{{ l3_fabric.interfaces }}"
       nxos_interface_ospf:
         provider: "{{ provider }}"
@@ -27,6 +29,8 @@
         area: "{{ ospf.area }}"
         passive_interface: false
     - name: Enable OSPF on Loopback Interfaces Links
+      loop_control:
+        pause: 1
       with_items: "{{ local_loopbacks }}"
       nxos_interface_ospf:
         provider: "{{ provider }}"

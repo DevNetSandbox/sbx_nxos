@@ -4,6 +4,8 @@
   connection: local
   tasks:
     - name: Reset Interface Configuration
+      loop_control:
+        pause: 1
       with_items: "{{ l3_fabric.interfaces }}"
       nxos_interface:
         provider: "{{ provider }}"
@@ -12,6 +14,8 @@
         description: "{{ item.name }}"
         admin_state: up
     - name: Remove IPv4 Address on Interface
+      loop_control:
+        pause: 1
       with_items: "{{ l3_fabric.interfaces }}"
       nxos_ip_interface:
         provider: "{{ provider }}"
