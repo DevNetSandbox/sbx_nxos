@@ -2,55 +2,52 @@
 - name: Enable BGP Feature
   hosts: switches
   connection: local
-  tasks: 
+  tasks:
     - name: Enable BGP Feature
-      nxos_feature: 
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
+      nxos_feature:
+        provider: "{{ provider }}"
         feature: bgp
         state: enabled
 - name: Setup BGP on Switches
   hosts: switches
   connection: local
-  tasks: 
-    - name: Configure BGP 
+  tasks:
+    - name: Configure BGP
       nxos_bgp:
-        host: "{{ inventory_hostname }}"
-        transport: nxapi 
+        provider: "{{ provider }}"
         asn: "{{ bgp.asn }}"
         vrf: default
         router_id: "{{ bgp.router_id }}"
         state: present
     - name: Configure Neighbors
+      loop_control:
+        pause: 1
       with_items: "{{ bgp.neighbors }}"
-      nxos_bgp_neighbor: 
-        host: "{{ inventory_hostname }}"
-        transport: nxapi 
+      nxos_bgp_neighbor:
+        provider: "{{ provider }}"
         asn: "{{ bgp.asn }}"
         neighbor: "{{ item.neighbor }}"
         remote_as: "{{ item.asn }}"
-        description: "{{ item.description }}" 
+        description: "{{ item.description }}"
         update_source: "{{ item.update_source }}"
         state: present
     - name: Configure Neighbors ipv4 Address Family
+      loop_control:
+        pause: 1
       with_items: "{{ bgp.neighbors }}"
-      nxos_bgp_neighbor_af: 
-        host: "{{ inventory_hostname }}"
-        transport: nxapi 
+      nxos_bgp_neighbor_af:
+        provider: "{{ provider }}"
         asn: "{{ bgp.asn }}"
         neighbor: "{{ item.neighbor }}"
         afi: ipv4
         safi: unicast
         state: present
     - name: Configure Default ipv4 Address Family
-      nxos_bgp_af: 
-        host: "{{ inventory_hostname }}"
-        transport: nxapi 
+      nxos_bgp_af:
+        provider: "{{ provider }}"
         asn: "{{ bgp.asn }}"
         vrf: default
         afi: ipv4
         safi: unicast
         state: present
         networks: "{{ bgp.networks }}"
-        
-    

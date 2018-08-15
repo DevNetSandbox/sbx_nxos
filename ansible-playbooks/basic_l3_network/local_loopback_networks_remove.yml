@@ -2,12 +2,16 @@
 - name: Remove Loopback Networks on Each Switch
   hosts: switches
   connection: local
-  tasks: 
+  tasks:
     - name: Destroy Local Loopback Interfaces
+      loop_control:
+        pause: 1
       with_items: "{{ local_loopbacks }}"
-      nxos_interface: 
+      nxos_interface:
         host: "{{ inventory_hostname }}"
-        transport: nxapi 
+        transport: nxapi
+        use_ssl: yes
+        validate_certs: no
         interface: "{{ item.name }}"
         state: absent
         mode: layer3

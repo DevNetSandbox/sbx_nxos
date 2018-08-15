@@ -3,7 +3,7 @@
   hosts: switches
   gather_facts: no
   connection: local
-  tasks: 
+  tasks:
     - name: Wait for device to boot
       wait_for:
         host: "{{ inventory_hostname }}"
@@ -12,20 +12,20 @@
         delay: 10
         timeout: 1200
     - name: Pause for 30 seconds post boot
-      pause: 
+      pause:
         seconds: 30
     # The nxos_install_os module errors if there is nothing
-    # set to start.  So can't use it.  
+    # set to start.  So can't use it.
     # - name: Set boot image
     #   nxos_install_os:
     #     host: "{{ inventory_hostname }}"
     #     transport: nxapi
     #     system_image_file: nxos.7.0.3.I6.1.bin
     - name: Configure boot image
-      nxos_config: 
+      nxos_config:
         host: "{{ inventory_hostname }}"
-        transport: cli 
-        lines: boot nxos bootflash:nxos.7.0.3.I6.1.bin
+        transport: cli
+        lines: boot nxos bootflash:nxos.9.2.1.bin
         save: yes
         match: exact
         timeout: 120

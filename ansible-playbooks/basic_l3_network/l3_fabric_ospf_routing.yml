@@ -2,40 +2,39 @@
 - name: Enable OSPF Feature
   hosts: switches
   connection: local
-  tasks: 
+  tasks:
     - name: Enable OSPF Feature
-      nxos_feature: 
-        host: "{{ inventory_hostname }}"
-        transport: nxapi
+      nxos_feature:
+        provider: "{{ provider }}"
         feature: ospf
         state: enabled
 
 - name: Setup OSPF on Distribution Switches
   hosts: switches
   connection: local
-  tasks: 
+  tasks:
     - name: Configure OSPF
-      nxos_ospf: 
-        host: "{{ inventory_hostname }}"
-        transport: nxapi 
+      nxos_ospf:
+        provider: "{{ provider }}"
         ospf: "{{ ospf.process }}"
         state: present
     - name: Enable OSPF on Interswitch Links
+      loop_control:
+        pause: 1
       with_items: "{{ l3_fabric.interfaces }}"
-      nxos_interface_ospf: 
-        host: "{{ inventory_hostname }}"
-        transport: nxapi 
+      nxos_interface_ospf:
+        provider: "{{ provider }}"
         interface: "{{ item.name }}"
         ospf: "{{ ospf.process }}"
         area: "{{ ospf.area }}"
         passive_interface: false
     - name: Enable OSPF on Loopback Interfaces Links
+      loop_control:
+        pause: 1
       with_items: "{{ local_loopbacks }}"
-      nxos_interface_ospf: 
-        host: "{{ inventory_hostname }}"
-        transport: nxapi 
+      nxos_interface_ospf:
+        provider: "{{ provider }}"
         interface: "{{ item.name }}"
         ospf: "{{ ospf.process }}"
         area: "{{ ospf.area }}"
         passive_interface: false
-        

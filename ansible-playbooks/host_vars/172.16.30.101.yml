@@ -1,5 +1,5 @@
-l3_fabric: 
-    interfaces: 
+l3_fabric:
+    interfaces:
         - name: Ethernet1/1
           desc: L3 Link to nx-osv9000-3
           ip_address: 172.20.0.1
@@ -16,23 +16,23 @@ local_loopbacks:
     - name: Loopback11
       desc: Sample Network Route Injection
       ip_address: 172.21.1.1
-      prefix: 24          
+      prefix: 24
     - name: Loopback12
       desc: Sample Network Route Injection
       ip_address: 172.21.2.1
-      prefix: 24          
+      prefix: 24
     - name: Loopback13
       desc: Sample Network Route Injection
       ip_address: 172.21.3.1
-      prefix: 24          
+      prefix: 24
     - name: Loopback14
       desc: Sample Network Route Injection
       ip_address: 172.21.4.1
       prefix: 24
-bgp: 
+bgp:
     asn: 65531
     router_id: 192.168.0.1
-    neighbors: 
+    neighbors:
         - neighbor: 172.20.0.18
           asn: 65532
           description: nx-osv9000-2

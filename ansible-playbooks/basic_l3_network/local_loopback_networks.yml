@@ -2,23 +2,31 @@
 - name: Configure Loopback Networks on Each Switch
   hosts: switches
   connection: local
-  tasks: 
+  tasks:
     - name: Create Loopback Interface
+      loop_control:
+        pause: 1
       with_items: "{{ local_loopbacks }}"
-      nxos_interface: 
+      nxos_interface:
         host: "{{ inventory_hostname }}"
-        transport: nxapi 
+        transport: nxapi
+        use_ssl: yes
+        validate_certs: no
         interface: "{{ item.name }}"
         mode: layer3
         description: "{{ item.desc }}"
         admin_state: up
     - name: Configure IPv4 Address on Interface
+      loop_control:
+        pause: 1
       with_items: "{{ local_loopbacks }}"
       nxos_ip_interface:
         host: "{{ inventory_hostname }}"
         state: present
         transport: nxapi
+        use_ssl: yes
+        validate_certs: no
         interface: "{{ item.name }}"
         version: v4
         addr: "{{ item.ip_address }}"
-        mask: "{{ item.prefix }}"  
+        mask: "{{ item.prefix }}"

@@ -2,20 +2,22 @@
 - name: Remove IP Connectivity for L3 Fabric
   hosts: switches
   connection: local
-  tasks: 
-    - name: Reset Interface Configuration
+  tasks:
+    - name: Remove IPv4 Address on Interface
+      loop_control:
+        pause: 1
       with_items: "{{ l3_fabric.interfaces }}"
-      nxos_interface: 
-        host: "{{ inventory_hostname }}"
-        transport: nxapi 
+      nxos_ip_interface:
+        provider: "{{ provider }}"
+        state: absent
+        interface: "{{ item.name }}"
+    - name: Reset Interface Configuration
+      loop_control:
+        pause: 1
+      with_items: "{{ l3_fabric.interfaces }}"
+      nxos_interface:
+        provider: "{{ provider }}"
         interface: "{{ item.name }}"
         mode: layer3
         description: "{{ item.name }}"
         admin_state: up
-    - name: Remove IPv4 Address on Interface
-      with_items: "{{ l3_fabric.interfaces }}"
-      nxos_ip_interface:
-        host: "{{ inventory_hostname }}"
-        state: absent
-        transport: nxapi
-        interface: "{{ item.name }}"
