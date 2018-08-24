@@ -1,6 +1,6 @@
 # DevNet Open NX-OS Sandbox
 
-Here you will find Sample Code, Scripts and Information for use in the DevNet [Open NX-OS Sandbox]().  
+Here you will find Sample Code, Scripts and Information for use in the DevNet [Open NX-OS Sandbox](https://devnetsandbox.cisco.com/RM/Diagram/Index/1e9b57ff-9e64-4c68-93e5-f0f0a8c6f22c?diagramType=Topology).  
 
 ![](readme_images/sbx-nxos-base-topology.png)
 
