@@ -35,6 +35,7 @@ vlan 1
 vrf context management
   ip route 0.0.0.0/0 172.16.30.254
 
+nxapi http port 80
 
 interface Ethernet1/1
   description Ethernet1/1
@@ -108,6 +109,8 @@ vlan 1
 
 vrf context management
   ip route 0.0.0.0/0 172.16.30.254
+
+nxapi http port 80
 
 interface Ethernet1/1
   description Ethernet1/1
@@ -183,6 +186,8 @@ vlan 1
 vrf context management
   ip route 0.0.0.0/0 172.16.30.254
 
+nxapi http port 80
+
 interface Ethernet1/1
   description Ethernet1/1
   no switchport
@@ -255,6 +260,8 @@ vlan 1
 vrf context management
   ip route 0.0.0.0/0 172.16.30.254
 hardware forwarding unicast trace
+
+nxapi http port 80
 
 interface Ethernet1/1
   description Ethernet1/1
