@@ -3,7 +3,7 @@ datacenter-east
 datacenter-west
 
 [datacenter-east]
-10.10.20.20
+10.10.20.20 ansible_connection=local
 
 [datacenter-west]
-10.10.20.20
+10.10.20.20 ansible_connection=local
