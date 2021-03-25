@@ -3,7 +3,7 @@ ncclient==0.6.0
 netmiko==2.2.2
 pyang==1.7.5
 pysnmp==4.4.4
-PyYAML==3.13
+PyYAML==5.4
 requests==2.19.1
 virlutils==0.8.4
 xmltodict==0.11.0
